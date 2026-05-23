@@ -1,0 +1,3 @@
+public enum TipoAtraccion {
+    MECANICA_TERRESTRE, MECANICA_DE_ALTURA, ACUATICA, SHOW, OTRO 
+}
