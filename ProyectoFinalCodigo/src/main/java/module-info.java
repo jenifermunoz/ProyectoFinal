@@ -1,8 +1,8 @@
-module org.example.proyectofinalcodigo {
+module org.uniquindio.proyectofinalcodigo {
     requires javafx.controls;
     requires javafx.fxml;
 
 
-    opens org.example.proyectofinalcodigo to javafx.fxml;
-    exports org.example.proyectofinalcodigo;
+    opens org.uniquindio.proyectofinalcodigo to javafx.fxml;
+    exports org.uniquindio.proyectofinalcodigo;
 }
