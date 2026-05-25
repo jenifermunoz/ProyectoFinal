@@ -189,7 +189,7 @@ public class Visitante extends Persona {
 
     // Pagar usando Saldo Virtual
 
-    public boolean pagarConSaldoVirtual(int cantidad){
+    public boolean pagarConSaldoVirtual(double cantidad){
 	    if(visitanteactivo.getSaldoVirtual()>cantidad){
 		    visitanteactivo.setSaldoVirtual(visitanteactivo.getSaldoVirtual()-cantidad);
 		    return true;

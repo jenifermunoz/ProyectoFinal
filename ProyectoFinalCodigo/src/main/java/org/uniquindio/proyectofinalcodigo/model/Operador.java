@@ -41,10 +41,7 @@ public class Operador extends Persona {
 	    if(atraccion.getEstado()!=EstadoAtraccion.EN_MANTENIMIENTO && atraccion.getEstado()!=EstadoAtraccion.CERRADA){
 		    if(visitante.getEdad()>=atraccion.getEdadMinimaRequerida() && visitante.getEstatura()>=atraccion.getAlturaMinimaRequerida() && atraccion.getEstado() != EstadoAtraccion.CERRADA && visitante.getListEntradas().get(visitante.getListEntradas().size()-1).isActiva() != false){
 			    if(visitante.getListEntradas().get(visitante.getListEntradas().size()-1).getTipoEntrada() == TipoEntrada.GENERAL){
-	    			if(visitante.getSaldoVirtual() < atraccion.getCostoAdicional()){
-		    			return false;
-		    		}
-		    		visitante.setSaldoVirtual(visitante.getSaldoVirtual()-atraccion.getCostoAdicional());
+	    			visitante.pagarConSaldoVirtual(atraccion.getCostoAdicional());
 		    		atraccion.getTheColaVirtual().getListVisitantesGeneralFamiliar().add(visitante);
 		    		return true;
 		    	}
