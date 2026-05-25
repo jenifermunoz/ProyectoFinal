@@ -29,6 +29,8 @@ public class Parque {
 
     }
 
+    // Filtrar Visitantes de una lista de Personas
+
     public ArrayList<Visitante> getListVisitantes(ArrayList<Persona> listPersonas){
         ArrayList<Visitante> listaVisitantes = new ArrayList<>();
         for(int i = 0; i<listPersonas.size(); i++){
@@ -38,6 +40,20 @@ public class Parque {
         }
         return listaVisitantes;
     }
+
+    // Filtrar Operadores de una lista de Personas
+
+    public ArrayList<Operador> getListOperadores(ArrayList<Persona> listPersonas){
+        ArrayList<Operador> listaOperadores = new ArrayList<>();
+        for(int i = 0; i<listPersonas.size(); i++){
+	        if(listPersonas.get(i) instanceof Operador){
+		        listaOperadores.add((Operador) listPersonas.get(i));
+	        }
+        }
+        return listaOperadores;
+    }
+
+    // Obtener todas las entradas existentes de los Visitantes 
 
     public ArrayList<Entrada> getListEntradas(ArrayList<Persona> listPersonas){
         ArrayList<Entrada> listEntradas = new ArrayList<>();
@@ -61,30 +77,41 @@ public class Parque {
         return -1;
     }
 
+    //Buscar Operador con cedula
+
+    public int buscarOperadorbyCedula(String cedula){
+	    for(int i=0; i<getListOperadores(getListPersonas()).size() ;i++){
+		    if(getListOperadores(getListPersonas()).get(i).getCedula().equals(cedula)){
+			    return i;
+		    }
+	    }
+        return -1;
+    }
+
     //Buscar Atraccion con nombre
 
     public int buscarAtraccionByNombre(String nombre){
 	    for(int i=0; i<getListZonas().size(); i++){
-		    for(int j=0; j<getListZonas().get(i).getListAtracciones.size(); j++){
-			    if(getListZonas().get(i).getListAtracciones.get(j).getNombre().equalsIgnoreCase(nombre)){
+		    for(int j=0; j<getListZonas().get(i).getListAtracciones().size(); j++){
+			    if(getListZonas().get(i).getListAtracciones().get(j).getNombre().equalsIgnoreCase(nombre)){
 			        return j;
 			    }
-		    	return -1;
 		    }
     	}
+        return -1;
     }
 
     //Buscar Zona con nombre de una Atraccion
 
     public int buscarZonaByNombreAtraccion(String nombre){
     	for(int i=0; i<getListZonas().size(); i++){
-	    	for(int j=0; j<getListZonas().get(i).getListAtracciones.size(); j++){
-	    		if(getListZonas().get(i).getListAtracciones.get(j).getNombre().equalsIgnoreCase(nombre)){
+	    	for(int j=0; j<getListZonas().get(i).getListAtracciones().size(); j++){
+	    		if(getListZonas().get(i).getListAtracciones().get(j).getNombre().equalsIgnoreCase(nombre)){
 		    	    return i;
 	    		}
-			    return -1;
 		    }
 	    }
+        return -1;
     }   
 
         

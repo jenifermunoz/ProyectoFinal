@@ -7,16 +7,16 @@ public class Zona {
     private String nombre;
     private String ubicacion;
     private int visitantesMax;
-    private List<Operador> listaOperadores;
-    private List<Atraccion> listaAtracciones;
+    private List<Operador> listOperadores;
+    private List<Atraccion> listAtracciones;
 
     public Zona(String id, String nombre, String ubicacion, int visitantesMax) {
         this.id = id;
         this.nombre = nombre;
         this.ubicacion = ubicacion;
         this.visitantesMax = visitantesMax;
-        this.listaAtracciones = listaAtracciones;
-        this.listaOperadores=listaOperadores;
+        this.listAtracciones = listAtracciones;
+        this.listOperadores=listOperadores;
     }
 
     public String getId() {
@@ -51,19 +51,19 @@ public class Zona {
         this.visitantesMax = visitantesMax;
     }
 
-    public List<Operador> getListaOperadores() {
-        return listaOperadores;
+    public List<Operador> getListOperadores() {
+        return listOperadores;
     }
 
-    public void setListaOperadores(List<Operador> listaOperadores) {
-        this.listaOperadores = listaOperadores;
+    public void setListOperadores(List<Operador> listOperadores) {
+        this.listOperadores = listOperadores;
     }
 
-    public List<Atraccion> getListaAtracciones() {
-        return listaAtracciones;
+    public List<Atraccion> getListAtracciones() {
+        return listAtracciones;
     }
 
-    public void setListaAtracciones(List<Atraccion> listaAtracciones) {
-        this.listaAtracciones = listaAtracciones;
+    public void setListAtracciones(List<Atraccion> listAtracciones) {
+        this.listAtracciones = listAtracciones;
     }
 }

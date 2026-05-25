@@ -12,12 +12,13 @@ public class Visitante extends Persona {
     private List<Entrada> listEntradas;
     private List<NotificacionAsignada> listNotificacionesAsignadas;
 
-    public Visitante(double saldoVirtual, int edad, boolean fotografia, String cedula, String nombre, LocalDate fechaNacimiento, double estatura, String numeroTelefono, String nacionalidad){
+    public Visitante(double saldoVirtual, int edad, boolean fotografia, Parque parque, String cedula, String nombre, LocalDate fechaNacimiento, double estatura, String numeroTelefono, String nacionalidad){
 
         super(cedula,nombre,fechaNacimiento,estatura,numeroTelefono,nacionalidad);
         this.saldoVirtual=saldoVirtual;
         this.edad=edad;
         this.fotografia=fotografia;
+        this.theParque = theParque;
         this.AtraccionesFavoritas = new ArrayList<>();
         this.listEntradas = new ArrayList<>();
         this.listNotificacionesAsignadas = new ArrayList<>();
@@ -33,17 +34,20 @@ public class Visitante extends Persona {
 		    Visitante visitanteactivo = parque.getListVisitantes(parque.getListPersonas()).get(parque.buscarVisitantebyCedula(cedula));
 		    return visitanteactivo;
         }
+        return null;
     }
 
     // Visitante Activo
 
-    Visitante visitanteactivo = iniciarSesionVisitante(theParque, cedula);
+    Visitante visitanteactivo = iniciarSesionVisitante(theParque, getCedula());
+    Parque parquevisitado = visitanteactivo.getTheParque();
 
     // Registrar perfil de un Visitante
 
     public boolean registrarPerfil(Parque parque, String cedula, String nombre, LocalDate fechaNacimiento, double estatura, String numeroTelefono, String nacionalidad, int edad){
 	    if(parque.buscarVisitantebyCedula(cedula) == -1){
-		    Visitante nuevovisitante = new Visitante(0, edad, false, cedula, nombre, fechaNacimiento, estatura, numeroTelefono, nacionalidad);
+		    Visitante nuevovisitante = new Visitante(0, edad, false, parque, cedula, nombre, fechaNacimiento, estatura, numeroTelefono, nacionalidad);
+            parque.getListPersonas().add(nuevovisitante);
 		    return true;
 	    }
 	    return false;
@@ -123,9 +127,8 @@ public class Visitante extends Persona {
 
     //Consultar el mapa del parque
 
-    public boolean consultarMapa(Parque parque){
+    public void consultarMapa(Parque parque){
 	    parque.getMapa();
-
     }
 
     // Consultar el tiempo de espera de una atraccion
@@ -194,10 +197,6 @@ public class Visitante extends Persona {
 	    return false;
     }
 
-
-
-
-    
 
     public double getSaldoVirtual() {
         return saldoVirtual;

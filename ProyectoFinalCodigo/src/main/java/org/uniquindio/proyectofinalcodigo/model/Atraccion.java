@@ -12,8 +12,9 @@ public class Atraccion {
     private TipoAtraccion tipo;
     private MotivoCierre motivoCierre;
     private EstadoAtraccion estado;
+    private ColaVirtual theColaVirtual;
 
-    public Atraccion(String id,String nombre,int capacidadMaxima,double alturaMinimaRequerida,int edadMinimaRequerida,int contadorVisitantes,double costoAdicional, int tiempoEstimadoEspera, TipoAtraccion tipo, MotivoCierre motivoCierre, EstadoAtraccion estado){
+    public Atraccion(String id,String nombre,int capacidadMaxima,double alturaMinimaRequerida,int edadMinimaRequerida,int contadorVisitantes,double costoAdicional, int tiempoEstimadoEspera, TipoAtraccion tipo, MotivoCierre motivoCierre, EstadoAtraccion estado, ColaVirtual theColaVirtual){
         this. id=id;
         this.nombre=nombre;
         this.capacidadMaxima=capacidadMaxima;
@@ -25,6 +26,7 @@ public class Atraccion {
         this.tipo=tipo;
         this.motivoCierre=motivoCierre;
         this.estado=estado;
+        this.theColaVirtual=theColaVirtual;
     }
 
     public String getId() {
@@ -103,7 +105,7 @@ public class Atraccion {
         return motivoCierre;
     }
 
-    public void setMotivo(MotivoCierre motivoCierre) {
+    public void setMotivoCierre(MotivoCierre motivoCierre) {
         this.motivoCierre = motivoCierre;
     }
 
@@ -114,4 +116,13 @@ public class Atraccion {
     public void setEstado(EstadoAtraccion estado) {
         this.estado = estado;
     }
+
+    public ColaVirtual getTheColaVirtual() {
+        return theColaVirtual;
+    }
+
+    public void setTheColaVirtual(ColaVirtual theColaVirtual) {
+        this.theColaVirtual = theColaVirtual;
+    }
+
 }
