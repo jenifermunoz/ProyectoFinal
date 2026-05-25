@@ -4,15 +4,15 @@ import java.util.List;
 
 public class ColaVirtual {
     private Atraccion atraccion;
-    private List<Visitante> listaVisitantesGeneralFamiliar;
-    private List<Visitante> listaVisitantesFastPass;
+    private List<Visitante> listVisitantesGeneralFamiliar;
+    private List<Visitante> listVisitantesFastPass;
     private int tiempoEspera;
 
     public ColaVirtual(Atraccion atraccion, int tiempoEspera) {
         this.atraccion = atraccion;
         this.tiempoEspera = tiempoEspera;
-        this.listaVisitantesGeneralFamiliar = new ArrayList<>();
-        this.listaVisitantesFastPass = new ArrayList<>();
+        this.listVisitantesGeneralFamiliar = new ArrayList<>();
+        this.listVisitantesFastPass = new ArrayList<>();
     }
 
     public Atraccion getAtraccion() {
@@ -23,20 +23,20 @@ public class ColaVirtual {
         this.atraccion = atraccion;
     }
 
-    public List<Visitante> getListaVisitantesGeneralFamiliar() {
-        return listaVisitantesGeneralFamiliar;
+    public List<Visitante> getListVisitantesGeneralFamiliar() {
+        return listVisitantesGeneralFamiliar;
     }
 
-    public void setListaVisitantesGeneralFamiliar(List<Visitante> listaVisitantesGeneralFamiliar) {
-        this.listaVisitantesGeneralFamiliar = listaVisitantesGeneralFamiliar;
+    public void setListVisitantesGeneralFamiliar(List<Visitante> listVisitantesGeneralFamiliar) {
+        this.listVisitantesGeneralFamiliar = listVisitantesGeneralFamiliar;
     }
 
-    public List<Visitante> getListaVisitantesFastPass() {
-        return listaVisitantesFastPass;
+    public List<Visitante> getListVisitantesFastPass() {
+        return listVisitantesFastPass;
     }
 
-    public void setListaVisitantesFastPass(List<Visitante> listaVisitantesFastPass) {
-        this.listaVisitantesFastPass = listaVisitantesFastPass;
+    public void setListVisitantesFastPass(List<Visitante> listVisitantesFastPass) {
+        this.listVisitantesFastPass = listVisitantesFastPass;
     }
 
     public int getTiempoEspera() {

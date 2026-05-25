@@ -10,11 +10,14 @@ public class Parque {
     private String paginaWeb;
     private String mapa;
     private int capacidadMax;
+    private int numCierresClima;
+    private boolean abierto;
+    private AlertaClima alertaClima;
     public ArrayList<Persona> listPersonas;
     public ArrayList<Zona> listZonas;
     public ArrayList<Atraccion> listAtracciones;
 
-    public Parque(String nombre, String direccion, String clima, String nit, String paginaWeb,String mapa, int capacidadMax){
+    public Parque(String nombre, String direccion, String clima, String nit, String paginaWeb,String mapa, int capacidadMax, int numCierresClima, boolean abierto, AlertaClima alertaClima){
 
         this.nombre=nombre;
         this.direccion=direccion;
@@ -23,6 +26,9 @@ public class Parque {
         this.paginaWeb=paginaWeb;
         this.mapa=mapa;
         this.capacidadMax=capacidadMax;
+        this.numCierresClima=numCierresClima;
+        this.abierto=abierto;
+        this.alertaClima=alertaClima;
         this.listPersonas = new ArrayList<>();
         this.listZonas = new ArrayList<>();
         this.listAtracciones = new ArrayList<>();
@@ -53,6 +59,18 @@ public class Parque {
         return listaOperadores;
     }
 
+    // Filtrar Administradores de una lista de Personas
+
+    public ArrayList<Administrador> getListAdministradores(ArrayList<Persona> listPersonas){
+        ArrayList<Administrador> listaAdministradores = new ArrayList<>();
+        for(int i = 0; i<listPersonas.size(); i++){
+	        if(listPersonas.get(i) instanceof Administrador){
+		        listaAdministradores.add((Administrador) listPersonas.get(i));
+	        }
+        }
+        return listaAdministradores;
+    }
+
     // Obtener todas las entradas existentes de los Visitantes 
 
     public ArrayList<Entrada> getListEntradas(ArrayList<Persona> listPersonas){
@@ -79,9 +97,20 @@ public class Parque {
 
     //Buscar Operador con cedula
 
-    public int buscarOperadorbyCedula(String cedula){
+    public int buscarOperadorByCedula(String cedula){
 	    for(int i=0; i<getListOperadores(getListPersonas()).size() ;i++){
 		    if(getListOperadores(getListPersonas()).get(i).getCedula().equals(cedula)){
+			    return i;
+		    }
+	    }
+        return -1;
+    }
+
+    //Buscar Administrador con cedula
+
+    public int buscarAdministradorByCedula(String cedula){
+	    for(int i=0; i<getListAdministradores(getListPersonas()).size() ;i++){
+		    if(getListAdministradores(getListPersonas()).get(i).getCedula().equals(cedula)){
 			    return i;
 		    }
 	    }
@@ -98,6 +127,17 @@ public class Parque {
 			    }
 		    }
     	}
+        return -1;
+    }
+
+    //Buscar Zona con nombre
+
+    public int buscarZonaByNombre(String nombre){
+	    for(int i=0;i<listZonas.size();i++){
+	    	if(listZonas.get(i).getNombre() == nombre){
+		    	return i;
+		    }
+	    }
         return -1;
     }
 
@@ -169,6 +209,30 @@ public class Parque {
 
     public void setCapacidadMax(int capacidadMax) {
         this.capacidadMax = capacidadMax;
+    }
+    
+    public int getNumCierresClima() {
+        return numCierresClima;
+    }
+
+    public void setNumCierresClima(int numCierresClima) {
+        this.numCierresClima = numCierresClima;
+    }
+
+    public boolean isAbierto() {
+        return abierto;
+    }
+
+    public void setAbierto(boolean abierto) {
+        this.abierto = abierto;
+    }
+    
+    public AlertaClima getAlertaClima() {
+        return alertaClima;
+    }
+
+    public void setAlertaClima(AlertaClima alertaClima) {
+        this.alertaClima = alertaClima;
     }
 
     public ArrayList<Persona> getListPersonas() {

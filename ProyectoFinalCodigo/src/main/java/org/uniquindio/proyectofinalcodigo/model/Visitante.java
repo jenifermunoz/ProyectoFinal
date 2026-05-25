@@ -40,7 +40,7 @@ public class Visitante extends Persona {
     // Visitante Activo
 
     Visitante visitanteactivo = iniciarSesionVisitante(theParque, getCedula());
-    Parque parquevisitado = visitanteactivo.getTheParque();
+    Parque parqueactivo = visitanteactivo.getTheParque();
 
     // Registrar perfil de un Visitante
 
@@ -178,7 +178,7 @@ public class Visitante extends Persona {
     // Unirse a la cola virtual de una Atraccion
 
     public boolean unirseAColaVirtualAtraccion(Parque parque, Atraccion atraccion){
-		return validarAccesoCola(visitanteactivo, atraccion);
+		return atraccion.procesarSolicitudCola(visitanteactivo, atraccion);
     }
 
     // Recargar Saldo Virtual 

@@ -1,5 +1,5 @@
 package org.uniquindio.proyectofinalcodigo.model;
 
 public enum MotivoCierre {
-    CLIMA, REVISION_TECNICA
+    CLIMA, FALLA_TECNICA, FIN_JORNADA
 }
