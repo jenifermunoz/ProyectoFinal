@@ -4,7 +4,7 @@ package org.uniquindio.proyectofinalcodigo.model;
  * Clase de pruebas unitarias para la clase Operador.
  * Verifica la validación de acceso a atracciones y cambios de capacidad.
  *
- * @author [Tu nombre aquí]
+ * @author Gabriel Garcia Duque
  * @since 2026-05
  */
 
