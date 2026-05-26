@@ -1,5 +1,6 @@
 package org.uniquindio.proyectofinalcodigo.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Zona {
@@ -7,16 +8,16 @@ public class Zona {
     private String nombre;
     private String ubicacion;
     private int visitantesMax;
-    private List<Operador> listOperadores;
-    private List<Atraccion> listAtracciones;
+    private ArrayList<Operador> listOperadores;
+    private ArrayList<Atraccion> listAtracciones;
 
     public Zona(String id, String nombre, String ubicacion, int visitantesMax) {
         this.id = id;
         this.nombre = nombre;
         this.ubicacion = ubicacion;
         this.visitantesMax = visitantesMax;
-        this.listAtracciones = listAtracciones;
-        this.listOperadores=listOperadores;
+        this.listAtracciones = new ArrayList<>();
+        this.listOperadores = new ArrayList<>();
     }
 
     public String getId() {
@@ -55,7 +56,7 @@ public class Zona {
         return listOperadores;
     }
 
-    public void setListOperadores(List<Operador> listOperadores) {
+    public void setListOperadores(ArrayList<Operador> listOperadores) {
         this.listOperadores = listOperadores;
     }
 
@@ -63,7 +64,7 @@ public class Zona {
         return listAtracciones;
     }
 
-    public void setListAtracciones(List<Atraccion> listAtracciones) {
+    public void setListAtracciones(ArrayList<Atraccion> listAtracciones) {
         this.listAtracciones = listAtracciones;
     }
 }

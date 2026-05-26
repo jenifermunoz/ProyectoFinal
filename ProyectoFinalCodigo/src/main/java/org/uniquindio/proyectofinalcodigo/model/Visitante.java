@@ -8,11 +8,11 @@ public class Visitante extends Persona {
     private int edad;
     private boolean fotografia;
     private Parque theParque;
-    private List<Atraccion> AtraccionesFavoritas;
-    private List<Entrada> listEntradas;
-    private List<NotificacionAsignada> listNotificacionesAsignadas;
+    private ArrayList<Atraccion> AtraccionesFavoritas;
+    private ArrayList<Entrada> listEntradas;
+    private ArrayList<NotificacionAsignada> listNotificacionesAsignadas;
 
-    public Visitante(double saldoVirtual, int edad, boolean fotografia, Parque parque, String cedula, String nombre, LocalDate fechaNacimiento, double estatura, String numeroTelefono, String nacionalidad){
+    public Visitante(double saldoVirtual, int edad, boolean fotografia, Parque theParque, String cedula, String nombre, LocalDate fechaNacimiento, double estatura, String numeroTelefono, String nacionalidad){
 
         super(cedula,nombre,fechaNacimiento,estatura,numeroTelefono,nacionalidad);
         this.saldoVirtual=saldoVirtual;
@@ -226,7 +226,7 @@ public class Visitante extends Persona {
         return AtraccionesFavoritas;
     }
 
-    public void setAtraccionesFavoritas(List<Atraccion> atraccionesFavoritas) {
+    public void setAtraccionesFavoritas(ArrayList<Atraccion> atraccionesFavoritas) {
         AtraccionesFavoritas = atraccionesFavoritas;
     }
 
@@ -234,7 +234,7 @@ public class Visitante extends Persona {
         return listEntradas;
     }
 
-    public void setListEntradas(List<Entrada> listEntrada) {
+    public void setListEntradas(ArrayList<Entrada> listEntradas) {
         this.listEntradas = listEntradas;
     }
 
@@ -250,7 +250,7 @@ public class Visitante extends Persona {
         return listNotificacionesAsignadas;
     }
 
-    public void setListNotificacionesAsignadas(List<NotificacionAsignada> listNotificacionesAsignadas) {
+    public void setListNotificacionesAsignadas(ArrayList<NotificacionAsignada> listNotificacionesAsignadas) {
         this.listNotificacionesAsignadas = listNotificacionesAsignadas;
     }
 

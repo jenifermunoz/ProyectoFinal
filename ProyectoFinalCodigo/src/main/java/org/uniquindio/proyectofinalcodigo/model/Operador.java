@@ -10,7 +10,7 @@ public class Operador extends Persona {
     private ArrayList<RevisionTecnica> listRevisionesTecnicas;
     private Parque theParque;
 
-    public Operador(int aniosExperiencia, Parque parque, String cedula, String nombre, LocalDate fechaNacimiento, double estatura, String numeroTelefono, String nacionalidad) {
+    public Operador(int aniosExperiencia, Parque theParque, Zona theZona, String cedula, String nombre, LocalDate fechaNacimiento, double estatura, String numeroTelefono, String nacionalidad) {
         super(cedula, nombre, fechaNacimiento, estatura, numeroTelefono, nacionalidad);
         this.aniosExperiencia = aniosExperiencia;
         this.theZona = theZona;

@@ -6,10 +6,13 @@ import java.util.ArrayList;
 public class Administrador extends Persona {
 
     private Parque theParque;
+	private ArrayList<ReporteGeneral> listReporteGeneral;
 
-    public Administrador(Parque parque, String cedula, String nombre, LocalDate fechaNacimiento, double estatura, String numeroTelefono, String nacionalidad) {
+    public Administrador(Parque theParque, String cedula, String nombre, LocalDate fechaNacimiento, double estatura, String numeroTelefono, String nacionalidad) {
         super(cedula, nombre, fechaNacimiento, estatura, numeroTelefono, nacionalidad);
         this.theParque = theParque;
+		this.listReporteGeneral = new ArrayList<>();
+
     }
 
     // Metodos
@@ -33,7 +36,8 @@ public class Administrador extends Persona {
 
     public boolean registrarOperador(Parque parque, String cedula, String nombre, LocalDate fechaNacimiento, double estatura, String numeroTelefono, String nacionalidad){
 	    if(parque.buscarOperadorByCedula(cedula) == -1){
-	    	Operador nuevooperador = new Operador(0, parque, cedula, nombre, fechaNacimiento, estatura, numeroTelefono, nacionalidad);
+	    	Operador nuevooperador = new Operador(0, parque, null, cedula, nombre, fechaNacimiento, estatura, numeroTelefono, nacionalidad);
+			parque.getListPersonas().add(nuevooperador);
 		    return true;
 	    }
 	    return false;
@@ -70,6 +74,7 @@ public class Administrador extends Persona {
 	    int i = parque.buscarZonaByNombre(nombre);
 	    if(i == -1){
 	    	Zona nuevazona = new Zona(Integer.toString(parque.getListZonas().size()+001), nombre, ubicacion, visitantesmax);
+			parque.getListZonas().add(nuevazona);
 	    	return true;
 	    }
 	    return false;
@@ -107,6 +112,7 @@ public class Administrador extends Persona {
 	    		Atraccion nuevaatraccion = new Atraccion(Integer.toString(parque.getListAtracciones().size()+001), nombre, capacidadMaxima, alturaMinimaRequerida, edadMinimaRequerida, 0, costoAdicional, 0, 0, 0, tipo, motivoCierre, estadoAtraccion, zona, null);
 	    		ColaVirtual nuevacola = new ColaVirtual(nuevaatraccion, 0);
 	    		nuevaatraccion.setTheColaVirtual(nuevacola);
+				parque.getListAtracciones().add(nuevaatraccion);
 	    		return true;
 	    	}
 	    	return false;
@@ -332,7 +338,9 @@ public class Administrador extends Persona {
 		    }
 		
 		    ReporteGeneral nuevoreportegeneral = new ReporteGeneral(dia, ingresos, listAtraccionesVisitadas, tiempopromedio, alertasclimas, alertasmantenimientos, listAtraccionesIncidentes);
+			adminactivo.getListReporteGeneral().add(nuevoreportegeneral);
 		    return nuevoreportegeneral.toString();
+			
 	
 	    }		
 	
@@ -347,6 +355,14 @@ public class Administrador extends Persona {
     public void setTheParque(Parque theParque) {
         this.theParque = theParque;
     }
+
+	public ArrayList<ReporteGeneral> getListReporteGeneral() {
+		return listReporteGeneral;
+	}
+
+	public void setListReporteGeneral(ArrayList<ReporteGeneral> listReporteGeneral) {
+		this.listReporteGeneral = listReporteGeneral;
+	}
     
 }
 

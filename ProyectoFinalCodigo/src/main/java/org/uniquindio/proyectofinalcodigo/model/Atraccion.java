@@ -22,7 +22,7 @@ public class Atraccion {
     private ArrayList<Visitante> listVisitantes;
     private ArrayList<Operador> listOperadores;
 
-    public Atraccion(String id,String nombre,int capacidadMaxima,double alturaMinimaRequerida,int edadMinimaRequerida,int contadorVisitantes, double costoAdicional, int tiempoEstimadoEspera, int numMantenimientos, int ciclosDiarios, TipoAtraccion tipo, MotivoCierre motivoCierre, EstadoAtraccion estado, Zona zona, ColaVirtual theColaVirtual){
+    public Atraccion(String id,String nombre,int capacidadMaxima,double alturaMinimaRequerida,int edadMinimaRequerida,int contadorVisitantes, double costoAdicional, int tiempoEstimadoEspera, int numMantenimientos, int ciclosDiarios, TipoAtraccion tipo, MotivoCierre motivoCierre, EstadoAtraccion estado, Zona theZona, ColaVirtual theColaVirtual){
         this. id=id;
         this.nombre=nombre;
         this.capacidadMaxima=capacidadMaxima;
