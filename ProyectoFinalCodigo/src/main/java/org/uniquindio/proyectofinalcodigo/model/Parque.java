@@ -1,5 +1,6 @@
 package org.uniquindio.proyectofinalcodigo.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Parque {
@@ -8,16 +9,17 @@ public class Parque {
     private String clima;
     private String nit;
     private String paginaWeb;
-    private String mapa;
+    private boolean mapa;
     private int capacidadMax;
     private int numCierresClima;
     private boolean abierto;
+    private LocalDate dia;
     private AlertaClima alertaClima;
     public ArrayList<Persona> listPersonas;
     public ArrayList<Zona> listZonas;
     public ArrayList<Atraccion> listAtracciones;
 
-    public Parque(String nombre, String direccion, String clima, String nit, String paginaWeb,String mapa, int capacidadMax, int numCierresClima, boolean abierto, AlertaClima alertaClima){
+    public Parque(String nombre, String direccion, String clima, String nit, String paginaWeb,boolean mapa, int capacidadMax, int numCierresClima, boolean abierto, LocalDate dia, AlertaClima alertaClima){
 
         this.nombre=nombre;
         this.direccion=direccion;
@@ -28,6 +30,7 @@ public class Parque {
         this.capacidadMax=capacidadMax;
         this.numCierresClima=numCierresClima;
         this.abierto=abierto;
+        this.dia=dia;
         this.alertaClima=alertaClima;
         this.listPersonas = new ArrayList<>();
         this.listZonas = new ArrayList<>();
@@ -195,11 +198,11 @@ public class Parque {
         this.paginaWeb = paginaWeb;
     }
 
-    public String getMapa() {
+    public boolean getMapa() {
         return mapa;
     }
 
-    public void setMapa(String mapa) {
+    public void setMapa(boolean mapa) {
         this.mapa = mapa;
     }
 
@@ -226,7 +229,15 @@ public class Parque {
     public void setAbierto(boolean abierto) {
         this.abierto = abierto;
     }
-    
+
+    public LocalDate getDia() {
+        return dia;
+    }
+
+    public void setDia(LocalDate dia) {
+        this.dia = dia;
+    }
+
     public AlertaClima getAlertaClima() {
         return alertaClima;
     }

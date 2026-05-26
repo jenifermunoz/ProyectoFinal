@@ -30,23 +30,21 @@ public class Operador extends Persona {
         return null;
 	}
 
-    // Operador Activo
-
-    Operador operadoractivo = iniciarSesionOperador(theParque, getCedula());
-    Parque parqueactivo = operadoractivo.getTheParque();
-
     // Validar el acceso de un visitante a la cola
 
     public boolean validarAccesoCola(Visitante visitante, Atraccion atraccion){
+
 	    if(atraccion.getEstado()!=EstadoAtraccion.EN_MANTENIMIENTO && atraccion.getEstado()!=EstadoAtraccion.CERRADA){
 		    if(visitante.getEdad()>=atraccion.getEdadMinimaRequerida() && visitante.getEstatura()>=atraccion.getAlturaMinimaRequerida() && atraccion.getEstado() != EstadoAtraccion.CERRADA && visitante.getListEntradas().get(visitante.getListEntradas().size()-1).isActiva() != false){
 			    if(visitante.getListEntradas().get(visitante.getListEntradas().size()-1).getTipoEntrada() == TipoEntrada.GENERAL){
 	    			visitante.pagarConSaldoVirtual(atraccion.getCostoAdicional());
 		    		atraccion.getTheColaVirtual().getListVisitantesGeneralFamiliar().add(visitante);
+					atraccion.getTheColaVirtual().setTiempoEspera((atraccion.getTheColaVirtual().getListVisitantesGeneralFamiliar().size()/(atraccion.getCapacidadMaxima()/2))*5);
 		    		return true;
 		    	}
 		    	if(visitante.getListEntradas().get(visitante.getListEntradas().size()-1).getTipoEntrada() == TipoEntrada.FAST_PASS){
 		    		atraccion.getTheColaVirtual().getListVisitantesFastPass().add(visitante);
+					atraccion.getTheColaVirtual().setTiempoEspera((atraccion.getTheColaVirtual().getListVisitantesFastPass().size()/(atraccion.getCapacidadMaxima()/2))*5);
 		    		return true;
 		    	}
 		    	atraccion.getTheColaVirtual().getListVisitantesGeneralFamiliar().add(visitante);
@@ -71,6 +69,10 @@ public class Operador extends Persona {
 		    	if(i<atraccion.getCapacidadMaxima()){
 		    		atraccion.ingresarVisitante(atraccion.getTheColaVirtual().getListVisitantesGeneralFamiliar().get(0));
 		    		atraccion.getTheColaVirtual().getListVisitantesGeneralFamiliar().remove(0);
+					if(atraccion.getTheZona().getTheParque().getDia()!=LocalDate.now()){
+						atraccion.setCiclosDiarios(0);
+					}
+			    	atraccion.setCiclosDiarios(atraccion.getCiclosDiarios()+1);
 		    	}
                 
 		    }
@@ -117,6 +119,9 @@ public class Operador extends Persona {
 		    case 2:
 			    if(atraccion.getEstado()==EstadoAtraccion.ACTIVA){
 			    	atraccion.setEstado(EstadoAtraccion.EN_MANTENIMIENTO);
+					if(atraccion.getTheZona().getTheParque().getDia()!=LocalDate.now()){
+						atraccion.setNumMantenimientos(0);
+					}
 			    	atraccion.setNumMantenimientos(atraccion.getNumMantenimientos()+1);
 			    	if(atraccion.getListRevisionesTecnicas().get(atraccion.getListRevisionesTecnicas().size()-1).estado().equals("FINALIZADA")){
 			    		registrarRevisionTecnica(atraccion, descripcion);
@@ -132,9 +137,9 @@ public class Operador extends Persona {
 
     public boolean registrarRevisionTecnica(Atraccion atraccion, String descripcion){
 	    if(atraccion.getListRevisionesTecnicas().get(atraccion.getListRevisionesTecnicas().size()-1).estado().equals("FINALIZADA")){
-		    RevisionTecnica nuevarevision = new RevisionTecnica("INICIADA", operadoractivo, atraccion, LocalDate.now(), descripcion, null);
+		    RevisionTecnica nuevarevision = new RevisionTecnica("INICIADA", this, atraccion, LocalDate.now(), descripcion, null);
 	    	atraccion.getListRevisionesTecnicas().add(nuevarevision);
-	    	operadoractivo.getListRevisionesTecnicas().add(nuevarevision);
+	    	this.getListRevisionesTecnicas().add(nuevarevision);
 	    	if(atraccion.getEstado()==EstadoAtraccion.ACTIVA){
 	    		registrarEstadoAtraccion(atraccion, 2, descripcion);
 	    	}
@@ -147,9 +152,9 @@ public class Operador extends Persona {
 
     public boolean finalizarRevisionTecnica(Atraccion atraccion, String descripcion){
 	    if(atraccion.getListRevisionesTecnicas().get(atraccion.getListRevisionesTecnicas().size()-1).estado().equals("INICIADA")){
-		    RevisionTecnica nuevarevision = new RevisionTecnica("FINALIZADA", operadoractivo, atraccion, atraccion.getListRevisionesTecnicas().get(atraccion.getListRevisionesTecnicas().size()-1).fechaInicio(), descripcion, LocalDate.now());
+		    RevisionTecnica nuevarevision = new RevisionTecnica("FINALIZADA", this, atraccion, atraccion.getListRevisionesTecnicas().get(atraccion.getListRevisionesTecnicas().size()-1).fechaInicio(), descripcion, LocalDate.now());
 		    atraccion.getListRevisionesTecnicas().add(nuevarevision);
-		    operadoractivo.getListRevisionesTecnicas().add(nuevarevision);
+		    this.getListRevisionesTecnicas().add(nuevarevision);
 		    if(atraccion.getEstado()==EstadoAtraccion.CERRADA){
 		    	registrarEstadoAtraccion(atraccion, 1, descripcion);
 		    }

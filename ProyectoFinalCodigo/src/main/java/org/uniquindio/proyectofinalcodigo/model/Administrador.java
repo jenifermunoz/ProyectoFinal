@@ -27,11 +27,6 @@ public class Administrador extends Persona {
         return null;
     }
 
-    // Administrador Activo
-
-    Administrador adminactivo = iniciarSesionAdministrador(theParque, getCedula());
-    Parque parqueactivo = adminactivo.getTheParque();
-
     // Registrar Operador
 
     public boolean registrarOperador(Parque parque, String cedula, String nombre, LocalDate fechaNacimiento, double estatura, String numeroTelefono, String nacionalidad){
@@ -73,7 +68,7 @@ public class Administrador extends Persona {
     public boolean registrarZona(Parque parque, String nombre, String ubicacion, int visitantesmax){
 	    int i = parque.buscarZonaByNombre(nombre);
 	    if(i == -1){
-	    	Zona nuevazona = new Zona(Integer.toString(parque.getListZonas().size()+001), nombre, ubicacion, visitantesmax);
+	    	Zona nuevazona = new Zona(Integer.toString(parque.getListZonas().size()+001), nombre, parque, ubicacion, visitantesmax);
 			parque.getListZonas().add(nuevazona);
 	    	return true;
 	    }
@@ -338,7 +333,7 @@ public class Administrador extends Persona {
 		    }
 		
 		    ReporteGeneral nuevoreportegeneral = new ReporteGeneral(dia, ingresos, listAtraccionesVisitadas, tiempopromedio, alertasclimas, alertasmantenimientos, listAtraccionesIncidentes);
-			adminactivo.getListReporteGeneral().add(nuevoreportegeneral);
+			this.getListReporteGeneral().add(nuevoreportegeneral);
 		    return nuevoreportegeneral.toString();
 			
 	
@@ -347,6 +342,12 @@ public class Administrador extends Persona {
 	    return "Invalido, termine jornada del Parque primero";
 	
     }
+
+	// Pasar dia
+
+	public void pasarDia(Parque parque){	
+		parque.setDia(LocalDate.now());
+	}
 
     public Parque getTheParque() {
         return theParque;

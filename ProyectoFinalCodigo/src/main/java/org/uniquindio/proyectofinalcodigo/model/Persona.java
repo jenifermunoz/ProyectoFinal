@@ -18,6 +18,13 @@ public abstract class Persona {
         this.nacionalidad = nacionalidad;
     }
 
+    @Override
+    public String toString() {
+        return "Persona [cedula=" + cedula + ", nombre=" + nombre + ", fechaNacimiento=" + fechaNacimiento
+                + ", estatura=" + estatura + ", numeroTelefono=" + numeroTelefono + ", nacionalidad=" + nacionalidad
+                + "]";
+    }
+
     public String getCedula() {
         return cedula;
     }

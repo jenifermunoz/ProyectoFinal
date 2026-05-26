@@ -8,12 +8,14 @@ public class Zona {
     private String nombre;
     private String ubicacion;
     private int visitantesMax;
+    private Parque theParque;
     private ArrayList<Operador> listOperadores;
     private ArrayList<Atraccion> listAtracciones;
 
-    public Zona(String id, String nombre, String ubicacion, int visitantesMax) {
+    public Zona(String id, String nombre, Parque theParque, String ubicacion, int visitantesMax) {
         this.id = id;
         this.nombre = nombre;
+        this.theParque = theParque;
         this.ubicacion = ubicacion;
         this.visitantesMax = visitantesMax;
         this.listAtracciones = new ArrayList<>();
@@ -67,4 +69,13 @@ public class Zona {
     public void setListAtracciones(ArrayList<Atraccion> listAtracciones) {
         this.listAtracciones = listAtracciones;
     }
+
+    public Parque getTheParque() {
+        return theParque;
+    }
+
+    public void setTheParque(Parque theParque) {
+        this.theParque = theParque;
+    }
+    
 }

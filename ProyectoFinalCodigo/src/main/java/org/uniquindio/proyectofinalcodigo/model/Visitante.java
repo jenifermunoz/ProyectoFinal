@@ -25,6 +25,12 @@ public class Visitante extends Persona {
 
     }
 
+    @Override
+    public String toString() {
+        return super.toString() + "Visitante [saldoVirtual=" + saldoVirtual + ", edad=" + edad + ", fotografia=" + fotografia
+                + ", theParque=" + theParque + "]";
+    }
+
     //Metodos
 
     // Inicio de Sesion - Visitante
@@ -36,11 +42,6 @@ public class Visitante extends Persona {
         }
         return null;
     }
-
-    // Visitante Activo
-
-    Visitante visitanteactivo = iniciarSesionVisitante(theParque, getCedula());
-    Parque parqueactivo = visitanteactivo.getTheParque();
 
     // Registrar perfil de un Visitante
 
@@ -56,21 +57,25 @@ public class Visitante extends Persona {
     // Actualizar perfil de un visitante
 
     public void actualizarPerfil(String nombre, double estatura, String numeroTelefono, String nacionalidad, int edad){
-		visitanteactivo.setNombre(nombre);
-		visitanteactivo.setEstatura(estatura);
-		visitanteactivo.setNumeroTelefono(numeroTelefono);
-		visitanteactivo.setNacionalidad(nacionalidad);
-		visitanteactivo.setEdad(edad);
+		this.setNombre(nombre);
+		this.setEstatura(estatura);
+		this.setNumeroTelefono(numeroTelefono);
+		this.setNacionalidad(nacionalidad);
+		this.setEdad(edad);
     }
 
     // Comprar tiquetes
 
     public boolean comprarTickets(Parque parque, String cedula, int tipo){
-	    if(visitanteactivo.getListEntradas().get(visitanteactivo.getListEntradas().size()-1).isActiva() != true && parque.getCapacidadMax() > parque.getListVisitantes(parque.getListPersonas()).size()){
+        int index = this.getListEntradas().size()-1;
+        if(this.getListEntradas().isEmpty()){
+            index = 0;
+        }
+	    if((this.getListEntradas().isEmpty() || this.getListEntradas().get(index).isActiva() != true) && parque.getCapacidadMax() > parque.getListVisitantes(parque.getListPersonas()).size()){
 		    Entrada nuevaentrada = new Entrada(null, LocalDate.now(), LocalDate.now().plusDays(5), false, null);
 		    switch(tipo){
 		    	case 1:
-			    	if(visitanteactivo.pagarConSaldoVirtual(100000)==true){
+			    	if(this.pagarConSaldoVirtual(100000)==true){
 				    	int num = 000;
 				    	for(int i=0; i<parque.getListEntradas(parque.getListPersonas()).size(); i++){
 					    	if(parque.getListEntradas(parque.getListPersonas()).get(i).getTipoEntrada() == TipoEntrada.GENERAL){
@@ -80,13 +85,13 @@ public class Visitante extends Persona {
 				    	nuevaentrada.setId("G"+Integer.toString(num+1));
 			    		nuevaentrada.setTipoEntrada(TipoEntrada.GENERAL);
 				    	nuevaentrada.setActiva(true);
-				    	visitanteactivo.getListEntradas().add(nuevaentrada);
+				    	this.getListEntradas().add(nuevaentrada);
 				    	return true;
 				    }
 			    	nuevaentrada = null;
 			    	return false;
 			    case 2:
-			    	if(visitanteactivo.pagarConSaldoVirtual(200000)==true){
+			    	if(this.pagarConSaldoVirtual(200000)==true){
 			    		int num = 000;
 			    		for(int i=0; i<parque.getListEntradas(parque.getListPersonas()).size(); i++){
 					    	if(parque.getListEntradas(parque.getListPersonas()).get(i).getTipoEntrada() == TipoEntrada.FAMILIAR){
@@ -96,13 +101,13 @@ public class Visitante extends Persona {
 			    		nuevaentrada.setId("F"+Integer.toString(num+1));
 			    		nuevaentrada.setTipoEntrada(TipoEntrada.FAMILIAR);
 			    		nuevaentrada.setActiva(true);
-			    		visitanteactivo.getListEntradas().add(nuevaentrada);
+			    		this.getListEntradas().add(nuevaentrada);
 				    	return true;
 				    }
 			    	nuevaentrada = null;
 			    	return false;
 			    case 3:
-			    	if(visitanteactivo.pagarConSaldoVirtual(170000)==true){
+			    	if(this.pagarConSaldoVirtual(170000)==true){
 			    		int num = 000;
 			    		for(int i=0; i<parque.getListEntradas(parque.getListPersonas()).size(); i++){
 					    	if(parque.getListEntradas(parque.getListPersonas()).get(i).getTipoEntrada() == TipoEntrada.FAST_PASS){
@@ -112,7 +117,7 @@ public class Visitante extends Persona {
 			    		nuevaentrada.setId("FP"+Integer.toString(num+1));
 			    		nuevaentrada.setTipoEntrada(TipoEntrada.FAST_PASS);
 			    		nuevaentrada.setActiva(true);
-			    		visitanteactivo.getListEntradas().add(nuevaentrada);
+			    		this.getListEntradas().add(nuevaentrada);
 			    		return true;
 			    	}
 			    	nuevaentrada = null;
@@ -149,7 +154,7 @@ public class Visitante extends Persona {
 	    int i = parque.buscarZonaByNombreAtraccion(nombre);
 	    int j = parque.buscarAtraccionByNombre(nombre);
 	    if(i!=-1 && j!=-1){
-	    	visitanteactivo.getAtraccionesFavoritas().add(parque.getListZonas().get(i).getListAtracciones().get(j));
+	    	this.getAtraccionesFavoritas().add(parque.getListZonas().get(i).getListAtracciones().get(j));
 	    	return true;
 	    }
 	    return false;
@@ -159,8 +164,8 @@ public class Visitante extends Persona {
 
     public String mostrarAtraccionesFavoritas(Parque parque){
 	    String favoritas = "";
-	    for(int i=0; i<visitanteactivo.getAtraccionesFavoritas().size(); i++){
-	    	favoritas += (visitanteactivo.getAtraccionesFavoritas().get(i).toString() + "\n");
+	    for(int i=0; i<this.getAtraccionesFavoritas().size(); i++){
+	    	favoritas += (this.getAtraccionesFavoritas().get(i).toString() + "\n");
 	    }
 	    return favoritas;
     }
@@ -169,8 +174,8 @@ public class Visitante extends Persona {
 
     public String mostrarNotificaciones(Parque parque){
 	    String notificaciones = "";
-	    for(int i=0; i<visitanteactivo.getListNotificacionesAsignadas().size(); i++){
-	    	notificaciones += (visitanteactivo.getListNotificacionesAsignadas().get(i).getTheNotificacion().toString() + "\n");
+	    for(int i=0; i<this.getListNotificacionesAsignadas().size(); i++){
+	    	notificaciones += (this.getListNotificacionesAsignadas().get(i).getTheNotificacion().toString() + "\n");
 	    }
 	    return notificaciones;
     }
@@ -178,20 +183,20 @@ public class Visitante extends Persona {
     // Unirse a la cola virtual de una Atraccion
 
     public boolean unirseAColaVirtualAtraccion(Parque parque, Atraccion atraccion){
-		return atraccion.procesarSolicitudCola(visitanteactivo, atraccion);
+		return atraccion.procesarSolicitudCola(this, atraccion);
     }
 
     // Recargar Saldo Virtual 
 
     public void RecargarSaldoVirtual(int cantidad){
-	    visitanteactivo.setSaldoVirtual(cantidad);
+	    this.setSaldoVirtual(cantidad);
     }
 
     // Pagar usando Saldo Virtual
 
     public boolean pagarConSaldoVirtual(double cantidad){
-	    if(visitanteactivo.getSaldoVirtual()>cantidad){
-		    visitanteactivo.setSaldoVirtual(visitanteactivo.getSaldoVirtual()-cantidad);
+	    if(this.getSaldoVirtual()>=cantidad){
+		    this.setSaldoVirtual(this.getSaldoVirtual()-cantidad);
 		    return true;
 	    }
 	    return false;
