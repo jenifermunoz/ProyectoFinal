@@ -136,8 +136,4 @@ public class ParqueTest {
         LOG.info("Fin prueba: testListaPersonasNoEsNull");
     }
 
-    // ---------------------------------------------------------------
-    // AQUÍ PUEDES AGREGAR MÁS PRUEBAS SIGUIENDO EL MISMO MOLDE
-    // ---------------------------------------------------------------
-
 }

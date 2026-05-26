@@ -5,8 +5,8 @@ package org.uniquindio.proyectofinalcodigo.model;
  * Verifica el registro, modificación y eliminación de operadores,
  * y la creación de zonas y atracciones.
  *
- * @author [Gabriel Garcia]
- * @since 2026-05-25
+ * @author Gabriel Garcia Duque
+ * @since 2026-05
  */
 
 import org.junit.jupiter.api.BeforeEach;
@@ -46,6 +46,7 @@ public class AdministradorTest {
      * Verifica que registrarOperador devuelve true cuando el operador es nuevo
      * (cedula que no existe en el parque).
      */
+
     @Test
     public void testRegistrarOperadorNuevo() {
         LOG.info("Inicio prueba: testRegistrarOperadorNuevo...");
@@ -92,6 +93,7 @@ public class AdministradorTest {
      * Verifica que modificarOperador devuelve true cuando el operador existe
      * y sus datos se actualizan.
      */
+
     @Test
     public void testModificarOperadorExistente() {
         LOG.info("Inicio prueba: testModificarOperadorExistente...");
@@ -130,6 +132,7 @@ public class AdministradorTest {
      * Verifica que después de registrar una zona, la lista de zonas del parque
      * tiene exactamente 1 zona.
      */
+    
     @Test
     public void testCantidadZonasDespuesDeRegistrar() {
         LOG.info("Inicio prueba: testCantidadZonasDespuesDeRegistrar...");
@@ -139,9 +142,5 @@ public class AdministradorTest {
 
         LOG.info("Fin prueba: testCantidadZonasDespuesDeRegistrar");
     }
-
-    // ---------------------------------------------------------------
-    // AQUÍ PUEDES AGREGAR MÁS PRUEBAS SIGUIENDO EL MISMO MOLDE
-    // ---------------------------------------------------------------
 
 }

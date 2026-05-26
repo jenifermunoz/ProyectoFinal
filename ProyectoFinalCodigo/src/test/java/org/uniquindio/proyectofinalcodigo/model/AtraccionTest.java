@@ -4,7 +4,7 @@ package org.uniquindio.proyectofinalcodigo.model;
  * Clase de pruebas unitarias para la clase Atraccion.
  * Verifica el comportamiento de los métodos de ingreso y salida de visitantes.
  *
- * @author [Tu nombre aquí]
+ * @author Gabriel Garcia Duque
  * @since 2026-05
  */
 
@@ -134,9 +134,5 @@ public class AtraccionTest {
 
         LOG.info("Fin prueba: testCambiarEstadoAMantenimiento");
     }
-
-    // ---------------------------------------------------------------
-    // AQUÍ PUEDES AGREGAR MÁS PRUEBAS SIGUIENDO EL MISMO MOLDE
-    // ---------------------------------------------------------------
 
 }
