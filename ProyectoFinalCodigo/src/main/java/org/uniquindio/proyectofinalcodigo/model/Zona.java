@@ -19,7 +19,7 @@ public class Zona {
         this.ubicacion = ubicacion;
         this.visitantesMax = visitantesMax;
         this.listAtracciones = new ArrayList<>();
-        this.listOperadores = new ArrayList<>();
+        this.listOperadores= new ArrayList<>();
     }
 
     public String getId() {

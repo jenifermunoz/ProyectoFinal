@@ -58,14 +58,14 @@ public class Operador extends Persona {
     // Permitir el acceso de un visitante a la atraccion
 
     public boolean permitirAccesoAtraccion(Visitante visitante, Atraccion atraccion, String descripcion){
-	
+
 	    if(atraccion.getEstado()!=EstadoAtraccion.EN_MANTENIMIENTO && atraccion.getEstado()!=EstadoAtraccion.CERRADA && atraccion.getListVisitantes()==null){
 		    for(int i=0; i<atraccion.getCapacidadMaxima(); i++){
-                
+
 			    atraccion.ingresarVisitante(atraccion.getTheColaVirtual().getListVisitantesFastPass().get(0));
 		    	atraccion.getTheColaVirtual().getListVisitantesFastPass().remove(0);
 		    	i++;
-                
+
 		    	if(i<atraccion.getCapacidadMaxima()){
 		    		atraccion.ingresarVisitante(atraccion.getTheColaVirtual().getListVisitantesGeneralFamiliar().get(0));
 		    		atraccion.getTheColaVirtual().getListVisitantesGeneralFamiliar().remove(0);
@@ -74,13 +74,13 @@ public class Operador extends Persona {
 					}
 			    	atraccion.setCiclosDiarios(atraccion.getCiclosDiarios()+1);
 		    	}
-                
+
 		    }
 		    atraccion.setContadorVisitantes(atraccion.getContadorVisitantes() + atraccion.getCapacidadMaxima());
 		    if(atraccion.getContadorVisitantes()>=500){
 		    	atraccion.setEstado(EstadoAtraccion.EN_MANTENIMIENTO);
 		    	registrarRevisionTecnica(atraccion, descripcion);		
-			
+
 		    }
 		    return true;
 	    }
@@ -105,7 +105,7 @@ public class Operador extends Persona {
     }
 
     // Registrar Estado de la Atraccion
-    
+
     public boolean registrarEstadoAtraccion(Atraccion atraccion, int estado, String descripcion){
 		
 	    switch(estado){
@@ -182,6 +182,7 @@ public class Operador extends Persona {
 		}
 		return false;
     }
+
 
     public int getAniosExperiencia() {
         return aniosExperiencia;

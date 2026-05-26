@@ -27,6 +27,11 @@ public class Administrador extends Persona {
         return null;
     }
 
+
+
+
+
+
     // Registrar Operador
 
     public boolean registrarOperador(Parque parque, String cedula, String nombre, LocalDate fechaNacimiento, double estatura, String numeroTelefono, String nacionalidad){
@@ -235,7 +240,7 @@ public class Administrador extends Persona {
 					    parque.getListZonas().get(i).getListAtracciones().get(j).setMotivoCierre(MotivoCierre.FIN_JORNADA);
 				    }
 				    parque.getListZonas().get(i).getListAtracciones().get(j).setEstado(EstadoAtraccion.ACTIVA);
-				
+
 			    }
 		    }
 	    }
@@ -275,7 +280,7 @@ public class Administrador extends Persona {
 		    atraccion.setEstado(EstadoAtraccion.CERRADA);
 		    atraccion.setMotivoCierre(MotivoCierre.FIN_JORNADA);
 	    }
-	
+
 	    parque.setAbierto(false);
     }
 
@@ -283,7 +288,7 @@ public class Administrador extends Persona {
 
     public String consultarReporteGeneral(Parque parque){
 	    if(parque.isAbierto() == false){
-	
+
             LocalDate dia = LocalDate.now();
 		    double ingresos = 0;
 		    ArrayList<Atraccion> listAtraccionesVisitadas = new ArrayList<>();
@@ -291,7 +296,7 @@ public class Administrador extends Persona {
 		    int alertasclimas = parque.getNumCierresClima();
 		    int alertasmantenimientos = 0;
 		    ArrayList<Atraccion> listAtraccionesIncidentes = new ArrayList<>();
-		
+
 		    for(int i = 0; i<parque.getListEntradas(parque.getListPersonas()).size(); i++){
                 if(parque.getListEntradas((parque.getListPersonas())).get(i).getFechaCompra() == dia){
 		    		if(parque.getListEntradas((parque.getListPersonas())).get(i).getTipoEntrada() == TipoEntrada.GENERAL){
@@ -305,7 +310,7 @@ public class Administrador extends Persona {
 			    	}
 			    }
 		    }
-		
+
 		    for(int i=0; i<parque.getListAtracciones().size(); i++){
 			    for(int j=0; j<=listAtraccionesVisitadas.size(); j++){
 			    	if(parque.getListAtracciones().get(i).getCiclosDiarios() < listAtraccionesVisitadas.get(j).getCiclosDiarios()){
@@ -313,17 +318,17 @@ public class Administrador extends Persona {
 			    	}
 			    }
 		    }
-		
+
 		    int sum = 0;
 		    for(int i=0; i<parque.getListAtracciones().size(); i++){
 		    	sum += parque.getListAtracciones().get(i).getTheColaVirtual().getTiempoEspera();
 		    }
 		    tiempopromedio = sum/parque.getListAtracciones().size();
-		
+
 		    for(int i=0; i<parque.getListAtracciones().size(); i++){
 		    	alertasmantenimientos += parque.getListAtracciones().get(i).getNumMantenimientos();
 		    }
-		
+
 		    for(int i=0; i<parque.getListAtracciones().size(); i++){
 		    	for(int j=0; i<=listAtraccionesIncidentes.size(); j++){
 		    		if(parque.getListAtracciones().get(i).getNumMantenimientos() < listAtraccionesIncidentes.get(j).getCiclosDiarios()){
@@ -331,16 +336,16 @@ public class Administrador extends Persona {
 		    		}
 		    	}
 		    }
-		
+
 		    ReporteGeneral nuevoreportegeneral = new ReporteGeneral(dia, ingresos, listAtraccionesVisitadas, tiempopromedio, alertasclimas, alertasmantenimientos, listAtraccionesIncidentes);
 			this.getListReporteGeneral().add(nuevoreportegeneral);
 		    return nuevoreportegeneral.toString();
-			
-	
+
+
 	    }		
-	
+
 	    return "Invalido, termine jornada del Parque primero";
-	
+
     }
 
 	// Pasar dia
@@ -364,6 +369,6 @@ public class Administrador extends Persona {
 	public void setListReporteGeneral(ArrayList<ReporteGeneral> listReporteGeneral) {
 		this.listReporteGeneral = listReporteGeneral;
 	}
-    
+
 }
 
