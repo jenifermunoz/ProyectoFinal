@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Operador extends Persona {
+public class Operador extends Persona implements IMostrable {
     private int aniosExperiencia;
     private Zona theZona;
     private ArrayList<RevisionTecnica> listRevisionesTecnicas;
@@ -183,6 +183,16 @@ public class Operador extends Persona {
 		return false;
     }
 
+
+
+    @Override
+    public String mostrarDatos() {
+        String zona = (theZona != null) ? theZona.getNombre() : "Sin zona";
+        return "Cedula: " + getCedula() + " | Nombre: " + getNombre() +
+               " | Zona Asignada: " + zona +
+               " | Experiencia: " + aniosExperiencia + " años" +
+               " | Revisiones: " + listRevisionesTecnicas.size();
+    }
 
     public int getAniosExperiencia() {
         return aniosExperiencia;

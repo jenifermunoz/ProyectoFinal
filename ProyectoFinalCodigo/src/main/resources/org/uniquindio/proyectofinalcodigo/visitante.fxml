@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+
+<BorderPane prefHeight="560.0" prefWidth="720.0"
+    xmlns="http://javafx.com/javafx/21"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="org.uniquindio.proyectofinalcodigo.viewController.VisitanteViewController">
+
+    <!-- Barra superior -->
+    <top>
+        <HBox style="-fx-background-color:#2e7d32; -fx-padding:10;" spacing="15" alignment="CENTER_LEFT">
+            <Label fx:id="lblNombreUsuario" text="Bienvenido"
+                   style="-fx-text-fill:white; -fx-font-weight:bold; -fx-font-size:14px;"/>
+            <Label fx:id="lblSaldo" text="Saldo: $0"
+                   style="-fx-text-fill:white; -fx-font-size:13px;"/>
+            <Label fx:id="lblEntradaActiva" text="Sin entrada"
+                   style="-fx-text-fill:#a5d6a7; -fx-font-size:12px;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Cerrar Sesion" onAction="#cerrarSesion"
+                    style="-fx-background-color:#c8e6c9; -fx-font-size:11px;"/>
+        </HBox>
+    </top>
+
+    <!-- Panel central con pestanas -->
+    <center>
+        <TabPane tabClosingPolicy="UNAVAILABLE">
+
+            <!-- Pestaña: Tickets -->
+            <Tab text="Comprar Ticket">
+                <VBox spacing="12" style="-fx-padding:20;">
+                    <Label text="Comprar Entrada" style="-fx-font-weight:bold; -fx-font-size:15px;"/>
+                    <Label text="General: $100.000  |  Familiar: $200.000  |  Fast-Pass: $170.000"
+                           style="-fx-font-size:11px;"/>
+                    <HBox spacing="10">
+                        <Button text="General" prefWidth="120" prefHeight="36" onAction="#comprarGeneral"
+                                style="-fx-background-color:#ffffff; -fx-border-color:#2e7d32; -fx-font-size:12px;"/>
+                        <Button text="Familiar" prefWidth="120" prefHeight="36" onAction="#comprarFamiliar"
+                                style="-fx-background-color:#ffffff; -fx-border-color:#2e7d32; -fx-font-size:12px;"/>
+                        <Button text="Fast-Pass" prefWidth="120" prefHeight="36" onAction="#comprarFastPass"
+                                style="-fx-background-color:#ffffff; -fx-border-color:#2e7d32; -fx-font-size:12px;"/>
+                    </HBox>
+                    <Label fx:id="lblMsgTicket" text="" style="-fx-text-fill:#2e7d32;"/>
+                </VBox>
+            </Tab>
+
+            <!-- Pestaña: Atracciones -->
+            <Tab text="Atracciones">
+                <VBox spacing="10" style="-fx-padding:15;">
+                    <Label text="Atracciones del Parque" style="-fx-font-weight:bold; -fx-font-size:15px;"/>
+                    <ListView fx:id="listAtracciones" prefHeight="160.0"/>
+                    <Label fx:id="lblInfoAtraccion" text="" style="-fx-font-size:11px; -fx-text-fill:#555;"/>
+                    <HBox spacing="8">
+                        <Button text="Ver Tiempo Espera" onAction="#consultarTiempoEspera"
+                                style="-fx-font-size:11px;"/>
+                        <Button text="Agregar Favorita" onAction="#agregarFavorita"
+                                style="-fx-font-size:11px;"/>
+                        <Button text="Unirse a Cola" onAction="#unirseACola"
+                                style="-fx-font-size:11px;"/>
+                    </HBox>
+                    <Label fx:id="lblMsgAtraccion" text="" style="-fx-text-fill:#2e7d32;"/>
+                </VBox>
+            </Tab>
+
+            <!-- Pestaña: Favoritas -->
+            <Tab text="Favoritas">
+                <VBox spacing="10" style="-fx-padding:15;">
+                    <Label text="Mis Atracciones Favoritas" style="-fx-font-weight:bold; -fx-font-size:15px;"/>
+                    <Button text="Actualizar lista" onAction="#verFavoritas" style="-fx-font-size:11px;"/>
+                    <TextArea fx:id="txtFavoritas" prefHeight="200" editable="false"
+                              promptText="Sus favoritas aparecen aqui..."/>
+                </VBox>
+            </Tab>
+
+            <!-- Pestaña: Notificaciones -->
+            <Tab text="Notificaciones">
+                <VBox spacing="10" style="-fx-padding:15;">
+                    <Label text="Mis Notificaciones" style="-fx-font-weight:bold; -fx-font-size:15px;"/>
+                    <Button text="Actualizar" onAction="#verNotificaciones" style="-fx-font-size:11px;"/>
+                    <TextArea fx:id="txtNotificaciones" prefHeight="200" editable="false"
+                              promptText="Sus notificaciones aparecen aqui..."/>
+                </VBox>
+            </Tab>
+
+            <!-- Pestaña: Perfil -->
+            <Tab text="Mi Perfil">
+                <VBox spacing="10" style="-fx-padding:15;">
+                    <Label text="Actualizar Perfil" style="-fx-font-weight:bold; -fx-font-size:15px;"/>
+                    <GridPane hgap="10" vgap="8">
+                        <Label text="Nombre:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                        <TextField fx:id="txtNombre" prefWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                        <Label text="Edad:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                        <TextField fx:id="txtEdad" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                        <Label text="Estatura:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                        <TextField fx:id="txtEstatura" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                        <Label text="Telefono:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                        <TextField fx:id="txtTelefono" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                    </GridPane>
+                    <Button text="Guardar Cambios" onAction="#actualizarPerfil"
+                            style="-fx-background-color:#2e7d32; -fx-text-fill:white;"/>
+                    <Label fx:id="lblStatus" text="" style="-fx-text-fill:#2e7d32;"/>
+                </VBox>
+            </Tab>
+
+            <!-- Pestaña: Saldo -->
+            <Tab text="Saldo">
+                <VBox spacing="12" style="-fx-padding:20;">
+                    <Label text="Recargar Saldo Virtual" style="-fx-font-weight:bold; -fx-font-size:15px;"/>
+                    <HBox spacing="8" alignment="CENTER_LEFT">
+                        <Label text="Cantidad ($):"/>
+                        <TextField fx:id="txtRecarga" prefWidth="150" promptText="ej: 100000"/>
+                        <Button text="Recargar" onAction="#recargarSaldo"
+                                style="-fx-background-color:#2e7d32; -fx-text-fill:white;"/>
+                    </HBox>
+                    <Label fx:id="lblMsgSaldo" text="" style="-fx-text-fill:#2e7d32;"/>
+                </VBox>
+            </Tab>
+
+        </TabPane>
+    </center>
+</BorderPane>

@@ -1,54 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TitledPane?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<AnchorPane prefHeight="420.0" prefWidth="580.0"
+    xmlns="http://javafx.com/javafx/21"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="org.uniquindio.proyectofinalcodigo.viewController.LoginViewController">
 
-<TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" text="Bienvenido!" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
-  <content>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-         <children>
-            <Button fx:id="btnLoginVisitante" layoutX="419.0" layoutY="111.0" mnemonicParsing="false" onAction="#LoginVisitante" prefHeight="75.0" prefWidth="158.0" text="Visitante" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Button>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" height="495.0" layoutX="-14.0" layoutY="-13.0" stroke="BLACK" strokeType="INSIDE" width="373.0" />
-            <ImageView fitHeight="473.0" fitWidth="366.0" layoutX="-7.0" layoutY="-14.0" opacity="0.8" pickOnBounds="true">
-               <image>
-                  <Image url="@images%20(4).jpg" />
-               </image>
-            </ImageView>
-            <Text layoutX="388.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Elija el modo de Inicio de Sesion:" textAlignment="CENTER" wrappingWidth="220.64169311523438">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Text>
-            <Text layoutX="-46.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TECH-PARK UQ" textAlignment="CENTER" wrappingWidth="448.7171630859375">
-               <font>
-                  <Font name="System Bold" size="40.0" />
-               </font>
-            </Text>
-            <Text fill="WHITE" layoutX="68.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Donde la ficcion se vuelve ciencia!" textAlignment="CENTER">
-               <font>
-                  <Font name="System Italic" size="15.0" />
-               </font>
-            </Text>
-            <Button fx:id="btnLoginOperador" layoutX="419.0" layoutY="213.0" mnemonicParsing="false" onAction="#LoginOperador" prefHeight="75.0" prefWidth="158.0" text="Operador" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Button>
-            <Button fx:id="btnLoginAdmin" layoutX="419.0" layoutY="317.0" mnemonicParsing="false" onAction="#LoginAdmin" prefHeight="75.0" prefWidth="158.0" text="Administrador" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Button>
-         </children></AnchorPane>
-  </content>
-</TitledPane>
+    <VBox alignment="CENTER" spacing="14.0"
+          AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
+          AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+
+        <padding><Insets top="30" bottom="30" left="60" right="60"/></padding>
+
+        <Label text="TECH-PARK UQ" style="-fx-font-size:28px; -fx-font-weight:bold;"/>
+        <Label text="Sistema de Gestion del Parque" style="-fx-font-size:13px;"/>
+
+        <Separator/>
+
+        <Label text="Cedula:" style="-fx-font-weight:bold;"/>
+        <TextField fx:id="txtCedula" promptText="Ingrese su cedula" prefWidth="260.0"/>
+
+        <Label fx:id="lblError" text="" style="-fx-text-fill:red; -fx-font-size:11px;" wrapText="true"/>
+
+        <Label text="Seleccione su rol:" style="-fx-font-weight:bold;"/>
+
+        <HBox spacing="12.0" alignment="CENTER">
+            <Button text="Visitante" prefWidth="130" prefHeight="40"
+                    style="-fx-background-color:#2e7d32; -fx-text-fill:white; -fx-font-weight:bold; -fx-font-size:13px;"
+                    onAction="#LoginVisitante"/>
+            <Button text="Operador" prefWidth="130" prefHeight="40"
+                    style="-fx-background-color:#1565c0; -fx-text-fill:white; -fx-font-weight:bold; -fx-font-size:13px;"
+                    onAction="#LoginOperador"/>
+            <Button text="Administrador" prefWidth="130" prefHeight="40"
+                    style="-fx-background-color:#b71c1c; -fx-text-fill:white; -fx-font-weight:bold; -fx-font-size:13px;"
+                    onAction="#LoginAdmin"/>
+        </HBox>
+
+        <Separator/>
+
+        <Label text="¿No tiene cuenta de visitante?" style="-fx-font-size:11px;"/>
+        <Button text="Registrarse como Visitante" prefWidth="200"
+                style="-fx-font-size:11px;"
+                onAction="#RegistrarVisitante"/>
+
+        <Label text="Cuentas de prueba: V001 | V002 | OP001 | OP002 | AD001"
+               style="-fx-font-size:10px; -fx-text-fill:#666666;" wrapText="true"/>
+    </VBox>
+</AnchorPane>

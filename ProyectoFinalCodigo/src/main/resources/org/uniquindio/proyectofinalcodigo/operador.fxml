@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+
+<BorderPane prefHeight="520.0" prefWidth="680.0"
+    xmlns="http://javafx.com/javafx/21"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="org.uniquindio.proyectofinalcodigo.viewController.OperadorViewController">
+
+    <top>
+        <HBox style="-fx-background-color:#1565c0; -fx-padding:10;" spacing="15" alignment="CENTER_LEFT">
+            <Label fx:id="lblNombreOperador" text="Operador"
+                   style="-fx-text-fill:white; -fx-font-weight:bold; -fx-font-size:14px;"/>
+            <Label fx:id="lblZonaAsignada" text="Zona: -"
+                   style="-fx-text-fill:#bbdefb; -fx-font-size:12px;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Cerrar Sesion" onAction="#cerrarSesion"
+                    style="-fx-background-color:#bbdefb; -fx-font-size:11px;"/>
+        </HBox>
+    </top>
+
+    <center>
+        <TabPane tabClosingPolicy="UNAVAILABLE">
+
+            <!-- Pestaña: Atracciones de la zona -->
+            <Tab text="Atracciones">
+                <VBox spacing="10" style="-fx-padding:15;">
+                    <Label text="Atracciones de mi Zona" style="-fx-font-weight:bold; -fx-font-size:14px;"/>
+                    <ListView fx:id="listAtracciones" prefHeight="180.0"/>
+                    <Button text="Ver Informacion" onAction="#verInfoAtraccion" style="-fx-font-size:11px;"/>
+                    <TextArea fx:id="txtInfoAtraccion" prefHeight="80" editable="false"
+                              promptText="Seleccione una atraccion y presione Ver Informacion"/>
+                </VBox>
+            </Tab>
+
+            <!-- Pestaña: Estado de atracciones -->
+            <Tab text="Estado">
+                <VBox spacing="10" style="-fx-padding:15;">
+                    <Label text="Gestionar Estado" style="-fx-font-weight:bold; -fx-font-size:14px;"/>
+                    <Label text="Seleccione la atraccion en la pestaña anterior, luego use los botones:"
+                           style="-fx-font-size:11px; -fx-text-fill:#555;" wrapText="true"/>
+                    <Label text="Descripcion / Motivo:"/>
+                    <TextField fx:id="txtDescripcion" promptText="Descripcion de la accion"/>
+                    <HBox spacing="10">
+                        <Button text="Activar" prefWidth="130" onAction="#activarAtraccion"
+                                style="-fx-background-color:#2e7d32; -fx-text-fill:white;"/>
+                        <Button text="Poner en Mantenimiento" prefWidth="170" onAction="#ponerEnMantenimiento"
+                                style="-fx-background-color:#e65100; -fx-text-fill:white;"/>
+                    </HBox>
+                    <Separator/>
+                    <Label text="Revisiones Tecnicas:" style="-fx-font-weight:bold;"/>
+                    <HBox spacing="10">
+                        <Button text="Iniciar Revision" prefWidth="130" onAction="#iniciarRevision"
+                                style="-fx-background-color:#1565c0; -fx-text-fill:white;"/>
+                        <Button text="Finalizar Revision" prefWidth="140" onAction="#finalizarRevision"
+                                style="-fx-background-color:#4a148c; -fx-text-fill:white;"/>
+                    </HBox>
+                </VBox>
+            </Tab>
+
+            <!-- Pestaña: Cola y capacidad -->
+            <Tab text="Cola / Capacidad">
+                <VBox spacing="10" style="-fx-padding:15;">
+                    <Label text="Gestion de Cola y Capacidad" style="-fx-font-weight:bold; -fx-font-size:14px;"/>
+                    <Label text="Seleccione la atraccion en la pestaña Atracciones."
+                           style="-fx-font-size:11px; -fx-text-fill:#555;"/>
+                    <Separator/>
+                    <Label text="Nueva capacidad maxima:"/>
+                    <HBox spacing="8" alignment="CENTER_LEFT">
+                        <TextField fx:id="txtCapacidad" prefWidth="120" promptText="ej: 15"/>
+                        <Button text="Cambiar Capacidad" onAction="#cambiarCapacidad"
+                                style="-fx-font-size:11px;"/>
+                    </HBox>
+                    <Separator/>
+                    <Button text="Retirar Visitantes de la Atraccion" prefWidth="220"
+                            onAction="#retirarVisitantes"
+                            style="-fx-background-color:#b71c1c; -fx-text-fill:white;"/>
+                </VBox>
+            </Tab>
+
+        </TabPane>
+    </center>
+
+    <bottom>
+        <HBox style="-fx-padding:8; -fx-background-color:#e3f2fd;">
+            <Label fx:id="lblStatus" text="Listo." style="-fx-font-size:11px;"/>
+        </HBox>
+    </bottom>
+</BorderPane>

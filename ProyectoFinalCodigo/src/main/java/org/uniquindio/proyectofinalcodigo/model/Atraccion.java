@@ -2,7 +2,7 @@ package org.uniquindio.proyectofinalcodigo.model;
 
 import java.util.ArrayList;
 
-public class Atraccion {
+public class Atraccion implements IMostrable {
     private String id;
     private String nombre;
     private int capacidadMaxima;
@@ -68,6 +68,21 @@ public class Atraccion {
         return false;
     }
 
+
+
+    @Override
+    public String mostrarDatos() {
+        String zona = (theZona != null) ? theZona.getNombre() : "Sin zona";
+        return "ID: " + id + " | Nombre: " + nombre + " | Zona: " + zona +
+               " | Tipo: " + tipo + " | Capacidad Max: " + capacidadMaxima +
+               " | Altura Min: " + alturaMinimaRequerida + "m" +
+               " | Edad Min: " + edadMinimaRequerida + " años" +
+               " | Visitantes Acumulados: " + contadorVisitantes +
+               " | Costo Adicional: $" + costoAdicional +
+               " | Tiempo Espera: " + tiempoEstimadoEspera + "min" +
+               " | Estado: " + estado +
+               " | Motivo Cierre: " + motivoCierre;
+    }
 
     public String getId() {
         return id;
