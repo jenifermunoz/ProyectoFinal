@@ -141,7 +141,7 @@
                      <RowConstraints />
                   </rowConstraints>
                     </GridPane>
-                    <Button onAction="#actualizarPerfil" style="-fx-background-color:#2e7d32; -fx-text-fill:white;" text="Guardar Cambios" />
+                    <Button onAction="#actualizarPerfil" text="Guardar Cambios" />
                     <Label fx:id="lblStatus" style="-fx-text-fill:#2e7d32;" text="" />
                 </VBox>
             </Tab>

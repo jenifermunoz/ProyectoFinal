@@ -200,11 +200,15 @@ public class Visitante extends Persona {
     // Mostrar notificaciones 
 
     public String mostrarNotificaciones(Parque parque){
-	    String notificaciones = "";
-	    for(int i=0; i<this.getListNotificacionesAsignadas().size(); i++){
-	    	notificaciones += (this.getListNotificacionesAsignadas().get(i).getTheNotificacion().toString() + "\n");
-	    }
-	    return notificaciones;
+        if (this.getListNotificacionesAsignadas().isEmpty()) {
+            return "No tiene notificaciones nuevas.";
+        }
+        String notificaciones = "";
+        for (int i = 0; i < this.getListNotificacionesAsignadas().size(); i++) {
+            Notificacion n = this.getListNotificacionesAsignadas().get(i).getTheNotificacion();
+            notificaciones += "[" + n.tiempoDePublicacion() + "] " + n.motivo() + ": " + n.mensaje() + "\n";
+        }
+        return notificaciones;
     }
 
     // Unirse a la cola virtual de una Atraccion

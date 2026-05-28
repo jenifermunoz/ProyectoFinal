@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Operador extends Persona implements IMostrable {
+public class Operador extends Persona implements IMostrable, INotificacionGenerable {
     private int aniosExperiencia;
     private Zona theZona;
     private ArrayList<RevisionTecnica> listRevisionesTecnicas;
@@ -144,6 +144,7 @@ public class Operador extends Persona implements IMostrable {
 			    	if(atraccion.getListRevisionesTecnicas().get(index).estado().equals("INICIADA") || atraccion.getListRevisionesTecnicas().isEmpty()){
 			    		finalizarRevisionTecnica(atraccion, descripcion);
 			    	}
+			    	atraccion.getTheZona().getTheParque().notificarVisitantes(generarNotificacion("La atraccion '" + atraccion.getNombre() + "' esta nuevamente ACTIVA."), atraccion);
 			    	return true; 
 			    }
 		    case 2:
@@ -160,6 +161,7 @@ public class Operador extends Persona implements IMostrable {
 			    	if(atraccion.getListRevisionesTecnicas().isEmpty() || atraccion.getListRevisionesTecnicas().get(index).estado().equals("FINALIZADA")){
 			    		registrarRevisionTecnica(atraccion, descripcion);
 			    	}
+			    	atraccion.getTheZona().getTheParque().notificarVisitantes(generarNotificacion("La atraccion '" + atraccion.getNombre() + "' esta en MANTENIMIENTO."), atraccion);
 			    	return true;
 			    }
             default:
@@ -201,6 +203,7 @@ public class Operador extends Persona implements IMostrable {
 		    	if(atraccion.getEstado()==EstadoAtraccion.CERRADA){
 		    		registrarEstadoAtraccion(atraccion, 1, descripcion);
 		    	}
+		    	atraccion.getTheZona().getTheParque().notificarVisitantes(generarNotificacion("Revision tecnica finalizada. La atraccion '" + atraccion.getNombre() + "' retomara operaciones pronto."), atraccion);
 		    	return true;
 	    	}
 	    	return false;
@@ -261,6 +264,12 @@ public class Operador extends Persona implements IMostrable {
 
     public void setTheParque(Parque theParque) {
         this.theParque = theParque;
+    }
+
+
+    @Override
+    public Notificacion generarNotificacion(String mensaje) {
+        return new Notificacion("Cambio en Atraccion", mensaje, java.time.LocalDate.now());
     }
 
 }

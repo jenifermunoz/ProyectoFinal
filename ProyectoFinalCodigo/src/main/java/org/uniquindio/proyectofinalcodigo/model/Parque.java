@@ -292,4 +292,35 @@ public class Parque {
         this.listAtracciones = listAtracciones;
     }
 
+
+    // Enviar una notificacion a todos los visitantes con ticket activo o en cola de una atraccion
+    public void notificarVisitantes(Notificacion notificacion, Atraccion atraccion) {
+        for (int i = 0; i < listPersonas.size(); i++) {
+            Persona p = listPersonas.get(i);
+            if (p instanceof Visitante) {
+                Visitante v = (Visitante) p;
+                boolean tieneTicketActivo = false;
+                for (int j = 0; j < v.getListEntradas().size(); j++) {
+                    if (v.getListEntradas().get(j).isActiva()) {
+                        tieneTicketActivo = true;
+                        break;
+                    }
+                }
+                boolean estaEnCola = false;
+                if (atraccion != null) {
+                    estaEnCola = atraccion.getTheColaVirtual().getListVisitantesGeneralFamiliar().contains(v) ||
+                                 atraccion.getTheColaVirtual().getListVisitantesFastPass().contains(v);
+                }
+                if (tieneTicketActivo || estaEnCola) {
+                    v.getListNotificacionesAsignadas().add(new NotificacionAsignada(notificacion, v));
+                }
+            }
+        }
+    }
+
+    // Enviar una notificacion a todos los visitantes con ticket activo (sin filtro de atraccion)
+    public void notificarTodosConTicket(Notificacion notificacion) {
+        notificarVisitantes(notificacion, null);
+    }
+
 }

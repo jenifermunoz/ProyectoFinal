@@ -3,7 +3,7 @@ package org.uniquindio.proyectofinalcodigo.model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Administrador extends Persona {
+public class Administrador extends Persona implements INotificacionGenerable {
 
     private Parque theParque;
 	private ArrayList<ReporteGeneral> listReporteGeneral;
@@ -228,6 +228,7 @@ public class Administrador extends Persona {
 	    				}
 	    			}
 	    		}
+	    		parque.notificarTodosConTicket(generarNotificacion("Alerta de Lluvia Fuerte: algunas atracciones han sido cerradas por seguridad."));
 	    		return true;
 	    	case 2:
 	    		parque.setAlertaClima(AlertaClima.TORMENTA_ELECTRICA);
@@ -240,6 +241,7 @@ public class Administrador extends Persona {
 	    				}
 	    			}
 	    		}
+	    		parque.notificarTodosConTicket(generarNotificacion("Alerta de Tormenta Electrica: algunas atracciones han sido cerradas por seguridad."));
 	    		return true;
 	    	default:
 	    		return false;
@@ -252,29 +254,25 @@ public class Administrador extends Persona {
 	    parque.setAlertaClima(null);
 	    for(int i=0; i<parque.getListZonas().size(); i++){
 		    for(int j=0; j<parque.getListZonas().get(i).getListAtracciones().size(); j++){
-
 				Atraccion atr = parque.getListZonas().get(i).getListAtracciones().get(j);
-				
 			    if(atr.getTipo() == TipoAtraccion.MECANICA_DE_ALTURA || atr.getTipo() == TipoAtraccion.ACUATICA){
-					boolean mantenimiento = false;
-					if (!atr.getListRevisionesTecnicas().isEmpty()) {
-				    	if(atr.getListRevisionesTecnicas().get(atr.getListRevisionesTecnicas().size()-1).estado().equals("INICIADA")){
-					    	atr.setEstado(EstadoAtraccion.EN_MANTENIMIENTO);
-							mantenimiento = true;
-				    	}
-					}
-					
-					if (!mantenimiento){
-						
-					} else if(parque.isAbierto() == false){
-							atr.setEstado(EstadoAtraccion.CERRADA);
-					    	atr.setMotivoCierre(MotivoCierre.FIN_JORNADA);
-					}else{
-							atr.setEstado(EstadoAtraccion.ACTIVA);
-							atr.setMotivoCierre(null);
+	
+					boolean tieneRevisionActiva = !atr.getListRevisionesTecnicas().isEmpty() &&
+						atr.getListRevisionesTecnicas().get(atr.getListRevisionesTecnicas().size()-1).estado().equals("INICIADA");
+					if (tieneRevisionActiva) {
+						atr.setEstado(EstadoAtraccion.EN_MANTENIMIENTO);
+					} else if (!parque.isAbierto()) {
+						atr.setEstado(EstadoAtraccion.CERRADA);
+						atr.setMotivoCierre(MotivoCierre.FIN_JORNADA);
+					} else {
+
+						atr.setEstado(EstadoAtraccion.ACTIVA);
+						atr.setMotivoCierre(null);
+						parque.notificarTodosConTicket(generarNotificacion(
+							"La alerta climatica ha terminado. La atraccion '"
+							+ atr.getNombre() + "' esta nuevamente ACTIVA."));
 					}
 				}
-				    
 			}
 		}
 		return true;
@@ -432,6 +430,12 @@ public class Administrador extends Persona {
 	public void setListReporteGeneral(ArrayList<ReporteGeneral> listReporteGeneral) {
 		this.listReporteGeneral = listReporteGeneral;
 	}
+
+
+    @Override
+    public Notificacion generarNotificacion(String mensaje) {
+        return new Notificacion("Alerta Administrativa", mensaje, java.time.LocalDate.now());
+    }
 
 }
 

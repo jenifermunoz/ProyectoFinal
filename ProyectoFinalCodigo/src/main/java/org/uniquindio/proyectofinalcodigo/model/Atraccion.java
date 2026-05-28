@@ -2,7 +2,7 @@ package org.uniquindio.proyectofinalcodigo.model;
 
 import java.util.ArrayList;
 
-public class Atraccion implements IMostrable {
+public class Atraccion implements IMostrable, INotificacionGenerable {
     private String id;
     private String nombre;
     private int capacidadMaxima;
@@ -48,6 +48,14 @@ public class Atraccion implements IMostrable {
     // Ingresar Visitantes de la Atraccion
 
     public void ingresarVisitante(Visitante visitante){
+        // Notificar inicio de show
+        if (tipo == TipoAtraccion.SHOW && listVisitantes.isEmpty()) {
+            theZona.getTheParque().notificarTodosConTicket(generarNotificacion("El show '" + nombre + "' esta por comenzar. Dirígase a la zona " + theZona.getNombre() + "."));
+        }
+        // Notificar si se alcanza mantenimiento preventivo (500 visitantes)
+        if (contadorVisitantes + 1 >= 500) {
+            theZona.getTheParque().notificarVisitantes(generarNotificacion("La atraccion '" + nombre + "' alcanzara mantenimiento preventivo. Puede ser cerrada pronto."), this);
+        }
 	    getListVisitantes().add(visitante);
     }
 
@@ -227,5 +235,11 @@ public class Atraccion implements IMostrable {
         this.listOperadores = listOperadores;
     }
 
+
+
+    @Override
+    public Notificacion generarNotificacion(String mensaje) {
+        return new Notificacion("Cambio en Atraccion", mensaje, java.time.LocalDate.now());
+    }
 
 }
