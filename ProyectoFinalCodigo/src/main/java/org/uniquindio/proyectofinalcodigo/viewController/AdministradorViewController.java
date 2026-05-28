@@ -21,11 +21,11 @@ public class AdministradorViewController {
 
     // Tabs de zonas
     @FXML private ListView<String> listZonas;
-    @FXML private TextField txtZonaNombre, txtZonaUbicacion, txtZonaMax;
+    @FXML private TextField txtZonaId, txtZonaNombre, txtZonaUbicacion, txtZonaMax;
 
     // Tabs de atracciones
     @FXML private ListView<String> listAtraccionesAdmin;
-    @FXML private TextField txtAtrNombre, txtAtrCap, txtAtrAltMin, txtAtrEdadMin, txtAtrCosto;
+    @FXML private TextField txtAtrId, txtAtrNombre, txtAtrCap, txtAtrAltMin, txtAtrEdadMin, txtAtrCosto;
     @FXML private ChoiceBox<String> cbTipoAtraccion;
     @FXML private ChoiceBox<String> cbZonaAtraccion;
 
@@ -35,11 +35,15 @@ public class AdministradorViewController {
     @FXML private ChoiceBox<String> cbAtraccionAsignar;
 
     // Reporte y jornada
-    @FXML private TextArea txtReporte;
+    @FXML private TextArea txtReporteOperador;
+    @FXML private TextArea txtReporteZona;
+    @FXML private TextArea txtReporteAtraccion;
+    @FXML private TextArea txtReporteGeneral;
+
 
     private App app;
     private AdministradorController ac;
-
+    
     public void setApp(App app) {
         this.app = app;
         this.ac = new AdministradorController(App.parque, App.adminActivo);
@@ -66,7 +70,7 @@ public class AdministradorViewController {
         if (listZonas == null) return;
         ObservableList<String> items = FXCollections.observableArrayList();
         for (Zona z : ac.getZonas())
-            items.add(z.getNombre() + " | " + z.getUbicacion() + " | Max:" + z.getVisitantesMax());
+            items.add(z.getId() + " | " + z.getNombre() + " | " + z.getUbicacion() + " | Max:" + z.getVisitantesMax());
         listZonas.setItems(items);
     }
 
@@ -74,7 +78,7 @@ public class AdministradorViewController {
         if (listAtraccionesAdmin == null) return;
         ObservableList<String> items = FXCollections.observableArrayList();
         for (Atraccion a : ac.getAtracciones())
-            items.add(a.getNombre() + " | " + a.getEstado() + " | " + a.getTipo());
+            items.add(a.getId() + " | " + a.getNombre() + " | " + a.getEstado() + " | " + a.getTipo());
         listAtraccionesAdmin.setItems(items);
     }
 
@@ -128,13 +132,14 @@ public class AdministradorViewController {
     private void despedirOperador() {
         boolean ok = ac.despedirOperador(txtOpCedula.getText());
         setStatus(ok ? "Operador despedido." : "Operador no encontrado.");
-        cargarListaOperadores(); cargarChoiceBoxes();
+        cargarListaOperadores(); 
+        cargarChoiceBoxes();
     }
 
     @FXML
     private void verDatosOperador() {
         String resultado = ac.consultarDatos(1, txtOpCedula.getText());
-        if (txtReporte != null) txtReporte.setText(resultado);
+        if (txtReporteOperador != null) txtReporteOperador.setText(resultado);
     }
 
     // ---- Zonas ----
@@ -153,7 +158,7 @@ public class AdministradorViewController {
     private void modificarZona() {
         try {
             int max = Integer.parseInt(txtZonaMax.getText());
-            boolean ok = ac.modificarZona(txtZonaNombre.getText(), max);
+            boolean ok = ac.modificarZona(txtZonaId.getText(), txtZonaNombre.getText(), max);
             setStatus(ok ? "Zona actualizada." : "Zona no encontrada.");
             cargarListaZonas();
         } catch (Exception e) { setStatus("Error: verifique los datos."); }
@@ -161,15 +166,15 @@ public class AdministradorViewController {
 
     @FXML
     private void eliminarZona() {
-        boolean ok = ac.eliminarZona(txtZonaNombre.getText());
+        boolean ok = ac.eliminarZona(txtZonaId.getText());
         setStatus(ok ? "Zona eliminada." : "Zona no encontrada.");
         cargarListaZonas(); cargarChoiceBoxes();
     }
 
     @FXML
     private void verDatosZona() {
-        String resultado = ac.consultarDatos(2, txtZonaNombre.getText());
-        if (txtReporte != null) txtReporte.setText(resultado);
+        String resultado = ac.consultarDatos(2, txtZonaId.getText());
+        if (txtReporteZona != null) txtReporteZona.setText(resultado);
     }
 
     // ---- Atracciones ----
@@ -196,16 +201,30 @@ public class AdministradorViewController {
     }
 
     @FXML
+    private void modificarAtraccion() {
+        try {
+            int cap = Integer.parseInt(txtAtrCap.getText());
+            double alt = Double.parseDouble(txtAtrAltMin.getText());
+            int age = Integer.parseInt(txtAtrEdadMin.getText());
+            double costo = Integer.parseInt(txtAtrCosto.getText());
+            boolean ok = ac.modificarAtraccion(txtAtrId.getText(), txtAtrNombre.getText(), cap, alt, age, costo);
+            setStatus(ok ? "Atraccion actualizada." : "Atraccion no encontrada.");
+            cargarListaAtracciones();
+
+        } catch (Exception e) { setStatus("Error: verifique los datos."); }
+    }
+
+    @FXML
     private void eliminarAtraccion() {
-        boolean ok = ac.eliminarAtraccion(txtAtrNombre.getText());
+        boolean ok = ac.eliminarAtraccion(txtAtrId.getText());
         setStatus(ok ? "Atraccion eliminada." : "Atraccion no encontrada.");
         cargarListaAtracciones(); cargarChoiceBoxes();
     }
 
     @FXML
     private void verDatosAtraccion() {
-        String resultado = ac.consultarDatos(3, txtAtrNombre.getText());
-        if (txtReporte != null) txtReporte.setText(resultado);
+        String resultado = ac.consultarDatos(3, txtAtrId.getText());
+        if (txtReporteAtraccion != null) txtReporteAtraccion.setText(resultado);
     }
 
     // ---- Asignaciones ----
@@ -224,6 +243,17 @@ public class AdministradorViewController {
     }
 
     @FXML
+    private void quitarOPDeZona(){
+        if (cbOperadorAsignar == null) return;
+        int idxOp = cbOperadorAsignar.getSelectionModel().getSelectedIndex();
+        if (idxOp < 0) { setStatus("Seleccione el operador."); return; }
+        Operador op = ac.getOperadores().get(idxOp);
+        boolean ok = ac.quitarOperadorDeZona(op);
+        op.setTheZona(null);
+        setStatus(ok ? "Operador desligado de zona" : "El operador no tiene zona.");
+    }
+
+    @FXML
     private void asignarOpAAtraccion() {
         if (cbOperadorAsignar == null || cbAtraccionAsignar == null) return;
         int idxOp = cbOperadorAsignar.getSelectionModel().getSelectedIndex();
@@ -234,6 +264,20 @@ public class AdministradorViewController {
         boolean ok = ac.asignarOperadorAAtraccion(op, atr);
         setStatus(ok ? "Operador asignado a atraccion." : "No pertenece a la misma zona.");
     }
+
+    @FXML
+    private void quitarOPDeAtraccion(){
+        if (cbOperadorAsignar == null || cbAtraccionAsignar == null) return;
+        int idxOp = cbOperadorAsignar.getSelectionModel().getSelectedIndex();
+        int idxAtr = cbAtraccionAsignar.getSelectionModel().getSelectedIndex();
+        if (idxOp < 0 || idxAtr < 0) { setStatus("Seleccione operador y atraccion."); return; }
+        Operador op = ac.getOperadores().get(idxOp);
+        Atraccion atr = ac.getAtracciones().get(idxAtr);
+        boolean ok = ac.quitarOperadorDeAtraccion(op, atr);
+        setStatus(ok ? "Operador desligado de atraccion" : "No hay relacion existente entre este operador y la atraccion");
+    }
+
+
 
     // ---- Alertas ----
 
@@ -264,12 +308,13 @@ public class AdministradorViewController {
     private void terminarJornada() {
         ac.terminarJornada();
         setStatus("Jornada terminada. Puede consultar el reporte.");
+        cargarListaAtracciones();
     }
 
     @FXML
     private void consultarReporte() {
         String reporte = ac.consultarReporte();
-        if (txtReporte != null) txtReporte.setText(reporte);
+        if (txtReporteGeneral != null) txtReporteGeneral.setText(reporte);
     }
 
     @FXML

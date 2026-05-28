@@ -22,6 +22,9 @@ public class VisitanteViewController {
     // Tickets
     @FXML private Label lblMsgTicket;
 
+    // Lista de Tickets
+    @FXML private TextArea txtEntradas;
+
     // Atracciones
     @FXML private ListView<String> listAtracciones;
     @FXML private Label lblInfoAtraccion;
@@ -56,6 +59,7 @@ public class VisitanteViewController {
         actualizarEntrada();
 
         // Llenar lista de atracciones
+
         ObservableList<String> nombres = FXCollections.observableArrayList();
         for (Atraccion a : vc.getAtracciones()) {
             nombres.add(a.getNombre() + " [" + a.getEstado() + "]");
@@ -69,6 +73,7 @@ public class VisitanteViewController {
     }
 
     private void actualizarEntrada() {
+
         if (lblEntradaActiva == null) return;
         var entradas = vc.getVisitanteActivo().getListEntradas();
         if (entradas.isEmpty()) {
@@ -77,10 +82,12 @@ public class VisitanteViewController {
             Entrada ultima = entradas.get(entradas.size() - 1);
             lblEntradaActiva.setText(ultima.isActiva() ? "Entrada: " + ultima.getTipoEntrada() : "Sin entrada activa");
         }
+
     }
 
     @FXML
     private void comprarGeneral() {
+
         boolean ok = vc.comprarTicket(1);
         if (lblMsgTicket != null) lblMsgTicket.setText(ok ? "Ticket GENERAL comprado." : "No se pudo comprar (saldo insuficiente o ya tiene entrada activa).");
         actualizarSaldo(); actualizarEntrada();
@@ -89,15 +96,20 @@ public class VisitanteViewController {
     @FXML
     private void comprarFamiliar() {
         boolean ok = vc.comprarTicket(2);
-        if (lblMsgTicket != null) lblMsgTicket.setText(ok ? "Ticket FAMILIAR comprado." : "No se pudo comprar.");
+        if (lblMsgTicket != null) lblMsgTicket.setText(ok ? "Ticket FAMILIAR comprado." : "No se pudo comprar. (saldo insuficiente o ya tiene entrada activa).");
         actualizarSaldo(); actualizarEntrada();
     }
 
     @FXML
     private void comprarFastPass() {
         boolean ok = vc.comprarTicket(3);
-        if (lblMsgTicket != null) lblMsgTicket.setText(ok ? "Ticket FAST-PASS comprado." : "No se pudo comprar.");
+        if (lblMsgTicket != null) lblMsgTicket.setText(ok ? "Ticket FAST-PASS comprado." : "No se pudo comprar. (saldo insuficiente o ya tiene entrada activa).");
         actualizarSaldo(); actualizarEntrada();
+    }
+
+    @FXML
+    private void mostrarListEntradas(){
+        if (txtEntradas != null) txtEntradas.setText(vc.mostrarListEntradas());
     }
 
     @FXML
@@ -117,7 +129,7 @@ public class VisitanteViewController {
         if (idx < 0) { if (lblMsgAtraccion != null) lblMsgAtraccion.setText("Seleccione una atraccion."); return; }
         String nombre = vc.getAtracciones().get(idx).getNombre();
         boolean ok = vc.agregarFavorita(nombre);
-        if (lblMsgAtraccion != null) lblMsgAtraccion.setText(ok ? "Agregada a favoritas." : "No encontrada.");
+        if (lblMsgAtraccion != null) lblMsgAtraccion.setText(ok ? "Agregada a favoritas." : "No encontrada / Ya añadida a favoritos anteriormente");
     }
 
     @FXML
@@ -128,6 +140,7 @@ public class VisitanteViewController {
         Atraccion a = vc.getAtracciones().get(idx);
         boolean ok = vc.unirseACola(a);
         if (lblMsgAtraccion != null) lblMsgAtraccion.setText(ok ? "Unido a la cola de: " + a.getNombre() : "No se pudo unir (requisitos no cumplidos o atraccion no activa).");
+        actualizarSaldo();
     }
 
     @FXML

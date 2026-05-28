@@ -23,6 +23,10 @@ public class VisitanteController {
         return visitanteActivo.comprarTickets(theParque, visitanteActivo.getCedula(), tipo);
     }
 
+    public String mostrarListEntradas(){
+        return visitanteActivo.mostrarListEntradas();
+    }
+
     public String consultarTiempoEspera(String nombreAtraccion) {
         return visitanteActivo.consultarTiemposEspera(theParque, nombreAtraccion);
     }

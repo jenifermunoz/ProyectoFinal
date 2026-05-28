@@ -4,6 +4,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import java.util.ArrayList;
+
 import org.uniquindio.proyectofinalcodigo.App;
 import org.uniquindio.proyectofinalcodigo.controller.OperadorController;
 import org.uniquindio.proyectofinalcodigo.model.*;
@@ -17,6 +20,10 @@ public class OperadorViewController {
     @FXML private TextField txtDescripcion;
     @FXML private Label lblStatus;
     @FXML private TextArea txtInfoAtraccion;
+    @FXML private TextArea txtRevisiones;
+    @FXML private ListView<Visitante> listVisitantesAtraccion;
+    @FXML private ListView<Visitante> listColaVirtualGF;
+    @FXML private ListView<Visitante> listColaVirtualFF;
 
     private App app;
     private OperadorController oc;
@@ -99,6 +106,11 @@ public class OperadorViewController {
     }
 
     @FXML
+    private void mostrarRevisionesTecnicas(){
+        if (txtRevisiones != null) txtRevisiones.setText(oc.mostrarRevisionesTecnicas());
+    }
+
+    @FXML
     private void cambiarCapacidad() {
         Atraccion a = getAtraccionSeleccionada();
         if (a == null) { setStatus("Seleccione una atraccion."); return; }
@@ -113,11 +125,60 @@ public class OperadorViewController {
     }
 
     @FXML
+    private void mostrarColaVirtualGF() {
+        Atraccion a = getAtraccionSeleccionada();
+        ArrayList<Visitante> datos = oc.mostrarColaVirtualGF(a);
+
+        System.out.println("Visitantes encontrados: " + datos.size());
+
+        ObservableList<Visitante> listaObservable = FXCollections.observableArrayList(datos);
+        listColaVirtualGF.setItems(listaObservable);
+    }
+
+    @FXML
+    private void mostrarColaVirtualFF() {
+        Atraccion a = getAtraccionSeleccionada();
+        ArrayList<Visitante> datos = oc.mostrarColaVirtualFF(a);
+        ObservableList<Visitante> listaObservable = FXCollections.observableArrayList(datos);
+        listColaVirtualFF.setItems(listaObservable);
+    }
+
+    @FXML
+    private void mostrarVisitantesAtraccion() {
+        Atraccion a = getAtraccionSeleccionada();
+        ArrayList<Visitante> datos = oc.mostrarVisitantesAtraccion(a);
+        ObservableList<Visitante> listaObservable = FXCollections.observableArrayList(datos);
+        listVisitantesAtraccion.setItems(listaObservable);
+    }
+
+    @FXML 
+    private void actualizarColasVirtuales(){
+        Atraccion a = getAtraccionSeleccionada();
+        if (a == null) { setStatus("Seleccione una atraccion."); return; }
+        mostrarColaVirtualFF();
+        mostrarColaVirtualGF();
+        setStatus("Colas Virtuales actualizadas.");
+    }
+
+    @FXML
+    private void permitirAccesoAtraccion(){
+        Atraccion a = getAtraccionSeleccionada();
+        if (a == null) { setStatus("Seleccione una atraccion."); return; }
+        boolean ok = oc.permitirAcceso(a);
+        setStatus(ok ? "Visitantes ingresados a la atraccion." : "Retire los visitantes actuales primero.");
+        mostrarColaVirtualFF();
+        mostrarColaVirtualGF();
+        mostrarVisitantesAtraccion();
+        cargarListaAtracciones();
+    }
+
+    @FXML
     private void retirarVisitantes() {
         Atraccion a = getAtraccionSeleccionada();
         if (a == null) { setStatus("Seleccione una atraccion."); return; }
         boolean ok = oc.retirarVisitantes(a);
         setStatus(ok ? "Visitantes retirados." : "No habia visitantes.");
+        mostrarVisitantesAtraccion();
         cargarListaAtracciones();
     }
 

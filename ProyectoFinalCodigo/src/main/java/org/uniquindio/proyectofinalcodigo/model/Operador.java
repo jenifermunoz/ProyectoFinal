@@ -37,7 +37,6 @@ public class Operador extends Persona implements IMostrable {
 	    if(atraccion.getEstado()!=EstadoAtraccion.EN_MANTENIMIENTO && atraccion.getEstado()!=EstadoAtraccion.CERRADA){
 		    if(visitante.getEdad()>=atraccion.getEdadMinimaRequerida() && visitante.getEstatura()>=atraccion.getAlturaMinimaRequerida() && atraccion.getEstado() != EstadoAtraccion.CERRADA && visitante.getListEntradas().get(visitante.getListEntradas().size()-1).isActiva() != false){
 			    if(visitante.getListEntradas().get(visitante.getListEntradas().size()-1).getTipoEntrada() == TipoEntrada.GENERAL){
-	    			visitante.pagarConSaldoVirtual(atraccion.getCostoAdicional());
 		    		atraccion.getTheColaVirtual().getListVisitantesGeneralFamiliar().add(visitante);
 					atraccion.getTheColaVirtual().setTiempoEspera((atraccion.getTheColaVirtual().getListVisitantesGeneralFamiliar().size()/(atraccion.getCapacidadMaxima()/2))*5);
 		    		return true;
@@ -57,25 +56,33 @@ public class Operador extends Persona implements IMostrable {
 
     // Permitir el acceso de un visitante a la atraccion
 
-    public boolean permitirAccesoAtraccion(Visitante visitante, Atraccion atraccion, String descripcion){
+    public boolean permitirAccesoAtraccion(Atraccion atraccion, String descripcion){
 
-	    if(atraccion.getEstado()!=EstadoAtraccion.EN_MANTENIMIENTO && atraccion.getEstado()!=EstadoAtraccion.CERRADA && atraccion.getListVisitantes()==null){
+		boolean fp = atraccion.getTheColaVirtual().getListVisitantesFastPass().isEmpty() == false;
+		boolean gf = atraccion.getTheColaVirtual().getListVisitantesGeneralFamiliar().isEmpty() == false;
+
+	    if(atraccion.getEstado()!=EstadoAtraccion.EN_MANTENIMIENTO && atraccion.getEstado()!=EstadoAtraccion.CERRADA && (fp || gf)){
 		    for(int i=0; i<atraccion.getCapacidadMaxima(); i++){
 
-			    atraccion.ingresarVisitante(atraccion.getTheColaVirtual().getListVisitantesFastPass().get(0));
-		    	atraccion.getTheColaVirtual().getListVisitantesFastPass().remove(0);
-		    	i++;
+				if (atraccion.getTheColaVirtual().getListVisitantesFastPass().isEmpty() == false) {
+			    	atraccion.ingresarVisitante(atraccion.getTheColaVirtual().getListVisitantesFastPass().get(0));
+		    		atraccion.getTheColaVirtual().getListVisitantesFastPass().remove(0);
 
-		    	if(i<atraccion.getCapacidadMaxima()){
-		    		atraccion.ingresarVisitante(atraccion.getTheColaVirtual().getListVisitantesGeneralFamiliar().get(0));
+				}else if(atraccion.getTheColaVirtual().getListVisitantesGeneralFamiliar().isEmpty() == false){
+					atraccion.ingresarVisitante(atraccion.getTheColaVirtual().getListVisitantesGeneralFamiliar().get(0));
 		    		atraccion.getTheColaVirtual().getListVisitantesGeneralFamiliar().remove(0);
-					if(atraccion.getTheZona().getTheParque().getDia()!=LocalDate.now()){
-						atraccion.setCiclosDiarios(0);
-					}
-			    	atraccion.setCiclosDiarios(atraccion.getCiclosDiarios()+1);
-		    	}
+				}else{
+					break;
+				}
 
 		    }
+
+			if(atraccion.getTheZona().getTheParque().getDia()!=LocalDate.now()){
+				atraccion.setCiclosDiarios(0);
+			}
+			
+			atraccion.setCiclosDiarios(atraccion.getCiclosDiarios()+1);
+		    	
 		    atraccion.setContadorVisitantes(atraccion.getContadorVisitantes() + atraccion.getCapacidadMaxima());
 		    if(atraccion.getContadorVisitantes()>=500){
 		    	atraccion.setEstado(EstadoAtraccion.EN_MANTENIMIENTO);
@@ -91,12 +98,30 @@ public class Operador extends Persona implements IMostrable {
     // Retirar Visitantes de la Atraccion
 
     public boolean retirarVisitantesAtraccion(Atraccion atraccion){
-        if(atraccion.getListVisitantes().get(0)!=null){
+        if(atraccion.getListVisitantes().isEmpty()==false){
 	        atraccion.sacarVisitantes();
             return true;
         }
         return false;
     }
+
+	// Mostrar Lista de Visitantes en Cola Virtual de la Atraccion (General y Familiar)
+
+	public ArrayList<Visitante> mostrarColaVirtualGF(Atraccion atraccion){
+		return atraccion.getTheColaVirtual().getListVisitantesGeneralFamiliar();
+	}
+
+	// Mostrar Lista de Visitantes en Cola Virtual de la Atraccion (General y Familiar)
+
+	public ArrayList<Visitante> mostrarColaVirtualFF(Atraccion atraccion){
+		return atraccion.getTheColaVirtual().getListVisitantesFastPass();
+	}
+
+	// Mostrar Lista de Visitantes en una atraccion activa
+
+	public ArrayList<Visitante> mostrarVisitantesAtraccion(Atraccion atraccion){
+		return atraccion.getListVisitantes();
+	}
 
     // Cambiar Capacidad Maxima de la Atraccion
 
@@ -183,7 +208,19 @@ public class Operador extends Persona implements IMostrable {
 		return false;
     }
 
+	// Mostrar lista de revisiones tecnicas
 
+	public String mostrarRevisionesTecnicas(Parque parque){
+		String revisiones="";
+		if(this.getListRevisionesTecnicas().isEmpty()==false){
+	        for(int i=0; i<this.getListRevisionesTecnicas().size(); i++){
+	    	    revisiones += (this.getListRevisionesTecnicas().get(i).toString() + "\n");
+	        }
+        }else{
+        revisiones = "No hay registro de revisiones tecnicas por el momento.";
+        }
+	    return revisiones;
+	}
 
     @Override
     public String mostrarDatos() {

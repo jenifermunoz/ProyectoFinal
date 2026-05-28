@@ -1,11 +1,10 @@
 package org.uniquindio.proyectofinalcodigo.model;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ColaVirtual {
     private Atraccion atraccion;
-    private List<Visitante> listVisitantesGeneralFamiliar;
-    private List<Visitante> listVisitantesFastPass;
+    private ArrayList<Visitante> listVisitantesGeneralFamiliar;
+    private ArrayList<Visitante> listVisitantesFastPass;
     private int tiempoEspera;
 
     public ColaVirtual(Atraccion atraccion, int tiempoEspera) {
@@ -23,19 +22,19 @@ public class ColaVirtual {
         this.atraccion = atraccion;
     }
 
-    public List<Visitante> getListVisitantesGeneralFamiliar() {
+    public ArrayList<Visitante> getListVisitantesGeneralFamiliar() {
         return listVisitantesGeneralFamiliar;
     }
 
-    public void setListVisitantesGeneralFamiliar(List<Visitante> listVisitantesGeneralFamiliar) {
+    public void setListVisitantesGeneralFamiliar(ArrayList<Visitante> listVisitantesGeneralFamiliar) {
         this.listVisitantesGeneralFamiliar = listVisitantesGeneralFamiliar;
     }
 
-    public List<Visitante> getListVisitantesFastPass() {
+    public ArrayList<Visitante> getListVisitantesFastPass() {
         return listVisitantesFastPass;
     }
 
-    public void setListVisitantesFastPass(List<Visitante> listVisitantesFastPass) {
+    public void setListVisitantesFastPass(ArrayList<Visitante> listVisitantesFastPass) {
         this.listVisitantesFastPass = listVisitantesFastPass;
     }
 

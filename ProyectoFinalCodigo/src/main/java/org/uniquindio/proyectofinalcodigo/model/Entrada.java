@@ -16,6 +16,12 @@ public class Entrada {
         this.tipoEntrada = tipoEntrada;
     }
 
+    @Override
+    public String toString() {
+        return "Entrada [ ID = " + id + ", Fecha de Compra = " + fechaCompra + ", Fecha de Vigencia = " + fechaVigencia + ", Activa = "
+                +  (activa ? "Si" : "No")+ ", Tipo de Entrada = " + tipoEntrada + "]";
+    }
+
     public String getId() {
         return id;
     }

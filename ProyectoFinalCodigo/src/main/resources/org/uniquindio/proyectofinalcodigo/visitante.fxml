@@ -1,26 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
 
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="560.0" prefWidth="720.0"
-    xmlns="http://javafx.com/javafx/21"
-    xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="org.uniquindio.proyectofinalcodigo.viewController.VisitanteViewController">
+<BorderPane prefHeight="560.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.uniquindio.proyectofinalcodigo.viewController.VisitanteViewController">
 
     <!-- Barra superior -->
     <top>
-        <HBox style="-fx-background-color:#2e7d32; -fx-padding:10;" spacing="15" alignment="CENTER_LEFT">
-            <Label fx:id="lblNombreUsuario" text="Bienvenido"
-                   style="-fx-text-fill:white; -fx-font-weight:bold; -fx-font-size:14px;"/>
-            <Label fx:id="lblSaldo" text="Saldo: $0"
-                   style="-fx-text-fill:white; -fx-font-size:13px;"/>
-            <Label fx:id="lblEntradaActiva" text="Sin entrada"
-                   style="-fx-text-fill:#a5d6a7; -fx-font-size:12px;"/>
-            <Region HBox.hgrow="ALWAYS"/>
-            <Button text="Cerrar Sesion" onAction="#cerrarSesion"
-                    style="-fx-background-color:#c8e6c9; -fx-font-size:11px;"/>
+        <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-background-color:#2e7d32; -fx-padding:10;">
+            <Label fx:id="lblNombreUsuario" style="-fx-text-fill:white; -fx-font-weight:bold; -fx-font-size:14px;" text="Bienvenido" />
+            <Label fx:id="lblSaldo" style="-fx-text-fill:white; -fx-font-size:13px;" text="Saldo: $0" />
+            <Label fx:id="lblEntradaActiva" style="-fx-text-fill:#a5d6a7; -fx-font-size:12px;" text="Sin entrada" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Button onAction="#cerrarSesion" style="-fx-background-color:#c8e6c9; -fx-font-size:11px;" text="Cerrar Sesion" />
         </HBox>
     </top>
 
@@ -31,90 +38,124 @@
             <!-- Pestaña: Tickets -->
             <Tab text="Comprar Ticket">
                 <VBox spacing="12" style="-fx-padding:20;">
-                    <Label text="Comprar Entrada" style="-fx-font-weight:bold; -fx-font-size:15px;"/>
-                    <Label text="General: $100.000  |  Familiar: $200.000  |  Fast-Pass: $170.000"
-                           style="-fx-font-size:11px;"/>
+                    <Label style="-fx-font-weight:bold; -fx-font-size:15px;" text="Comprar Entrada" />
+                    <Label style="-fx-font-size:11px;" text="General: $100.000  |  Familiar: $200.000  |  Fast-Pass: $170.000" />
                     <HBox spacing="10">
-                        <Button text="General" prefWidth="120" prefHeight="36" onAction="#comprarGeneral"
-                                style="-fx-background-color:#ffffff; -fx-border-color:#2e7d32; -fx-font-size:12px;"/>
-                        <Button text="Familiar" prefWidth="120" prefHeight="36" onAction="#comprarFamiliar"
-                                style="-fx-background-color:#ffffff; -fx-border-color:#2e7d32; -fx-font-size:12px;"/>
-                        <Button text="Fast-Pass" prefWidth="120" prefHeight="36" onAction="#comprarFastPass"
-                                style="-fx-background-color:#ffffff; -fx-border-color:#2e7d32; -fx-font-size:12px;"/>
+                        <Button onAction="#comprarGeneral" prefHeight="36" prefWidth="120" style="-fx-background-color:#ffffff; -fx-border-color:#2e7d32; -fx-font-size:12px;" text="General" />
+                        <Button onAction="#comprarFamiliar" prefHeight="36" prefWidth="120" style="-fx-background-color:#ffffff; -fx-border-color:#2e7d32; -fx-font-size:12px;" text="Familiar" />
+                        <Button onAction="#comprarFastPass" prefHeight="36" prefWidth="120" style="-fx-background-color:#ffffff; -fx-border-color:#2e7d32; -fx-font-size:12px;" text="Fast-Pass" />
                     </HBox>
-                    <Label fx:id="lblMsgTicket" text="" style="-fx-text-fill:#2e7d32;"/>
+                    <Label fx:id="lblMsgTicket" style="-fx-text-fill:#2e7d32;" text="" />
                 </VBox>
             </Tab>
+         <Tab text="Historial Tickets">
+            <content>
+               <VBox spacing="10.0" style="-fx-padding: 15;">
+                  <children>
+                     <Label style="-fx-font-weight:bold; -fx-font-size:15px;" text="Historial de Tickets comprados." />
+                     <Label style="-fx-font-size:11px;" text="Aqui puede consultar su historial de tiquetes comprados" />
+                     <Button onAction="#mostrarListEntradas" style="-fx-font-size:11px;" text="Actualizar lista" />
+                     <HBox spacing="10" />
+                     <TextArea fx:id="txtEntradas" prefHeight="200.0" prefWidth="680.0" promptText="Sus tiquetes apareceran aqui..." />
+                  </children>
+               </VBox>
+            </content>
+         </Tab>
+         <Tab text="Mapa del Parque">
+            <content>
+               <VBox alignment="CENTER" prefHeight="486.0" prefWidth="0.0" spacing="10.0" style="-fx-padding: 15;">
+                  <children>
+                     <VBox prefHeight="200.0" prefWidth="100.0">
+                        <children>
+                           <Label style="-fx-font-weight:bold; -fx-font-size:15px;" text="Mapa del Parque" />
+                        </children>
+                     </VBox>
+                     <ImageView fitHeight="430.0" fitWidth="465.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@parque.png" />
+                        </image>
+                        <viewport>
+                           <Rectangle2D />
+                        </viewport>
+                     </ImageView>
+                  </children>
+               </VBox>
+            </content>
+         </Tab>
 
             <!-- Pestaña: Atracciones -->
             <Tab text="Atracciones">
                 <VBox spacing="10" style="-fx-padding:15;">
-                    <Label text="Atracciones del Parque" style="-fx-font-weight:bold; -fx-font-size:15px;"/>
-                    <ListView fx:id="listAtracciones" prefHeight="160.0"/>
-                    <Label fx:id="lblInfoAtraccion" text="" style="-fx-font-size:11px; -fx-text-fill:#555;"/>
+                    <Label style="-fx-font-weight:bold; -fx-font-size:15px;" text="Atracciones del Parque" />
+                    <ListView fx:id="listAtracciones" prefHeight="160.0" />
+                    <Label fx:id="lblInfoAtraccion" style="-fx-font-size:11px; -fx-text-fill:#555;" text="" />
                     <HBox spacing="8">
-                        <Button text="Ver Tiempo Espera" onAction="#consultarTiempoEspera"
-                                style="-fx-font-size:11px;"/>
-                        <Button text="Agregar Favorita" onAction="#agregarFavorita"
-                                style="-fx-font-size:11px;"/>
-                        <Button text="Unirse a Cola" onAction="#unirseACola"
-                                style="-fx-font-size:11px;"/>
+                        <Button onAction="#consultarTiempoEspera" style="-fx-font-size:11px;" text="Ver Tiempo Espera" />
+                        <Button onAction="#agregarFavorita" style="-fx-font-size:11px;" text="Agregar Favorita" />
+                        <Button onAction="#unirseACola" style="-fx-font-size:11px;" text="Unirse a Cola" />
                     </HBox>
-                    <Label fx:id="lblMsgAtraccion" text="" style="-fx-text-fill:#2e7d32;"/>
+                    <Label fx:id="lblMsgAtraccion" style="-fx-text-fill:#2e7d32;" text="" />
                 </VBox>
             </Tab>
 
             <!-- Pestaña: Favoritas -->
             <Tab text="Favoritas">
                 <VBox spacing="10" style="-fx-padding:15;">
-                    <Label text="Mis Atracciones Favoritas" style="-fx-font-weight:bold; -fx-font-size:15px;"/>
-                    <Button text="Actualizar lista" onAction="#verFavoritas" style="-fx-font-size:11px;"/>
-                    <TextArea fx:id="txtFavoritas" prefHeight="200" editable="false"
-                              promptText="Sus favoritas aparecen aqui..."/>
+                    <Label style="-fx-font-weight:bold; -fx-font-size:15px;" text="Mis Atracciones Favoritas" />
+               <Label style="-fx-font-size:11px;" text="Aqui puedes ver tus atracciones favoritas" />
+                    <Button onAction="#verFavoritas" style="-fx-font-size:11px;" text="Actualizar lista" />
+                    <TextArea fx:id="txtFavoritas" editable="false" prefHeight="200" promptText="Sus favoritas aparecen aqui..." />
                 </VBox>
             </Tab>
 
             <!-- Pestaña: Notificaciones -->
             <Tab text="Notificaciones">
                 <VBox spacing="10" style="-fx-padding:15;">
-                    <Label text="Mis Notificaciones" style="-fx-font-weight:bold; -fx-font-size:15px;"/>
-                    <Button text="Actualizar" onAction="#verNotificaciones" style="-fx-font-size:11px;"/>
-                    <TextArea fx:id="txtNotificaciones" prefHeight="200" editable="false"
-                              promptText="Sus notificaciones aparecen aqui..."/>
+                    <Label style="-fx-font-weight:bold; -fx-font-size:15px;" text="Mis Notificaciones" />
+                    <Button onAction="#verNotificaciones" style="-fx-font-size:11px;" text="Actualizar" />
+                    <TextArea fx:id="txtNotificaciones" editable="false" prefHeight="200" promptText="Sus notificaciones aparecen aqui..." />
                 </VBox>
             </Tab>
 
             <!-- Pestaña: Perfil -->
             <Tab text="Mi Perfil">
                 <VBox spacing="10" style="-fx-padding:15;">
-                    <Label text="Actualizar Perfil" style="-fx-font-weight:bold; -fx-font-size:15px;"/>
+                    <Label style="-fx-font-weight:bold; -fx-font-size:15px;" text="Actualizar Perfil" />
                     <GridPane hgap="10" vgap="8">
-                        <Label text="Nombre:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                        <TextField fx:id="txtNombre" prefWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-                        <Label text="Edad:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                        <TextField fx:id="txtEdad" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                        <Label text="Estatura:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                        <TextField fx:id="txtEstatura" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-                        <Label text="Telefono:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-                        <TextField fx:id="txtTelefono" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                        <Label text="Nombre:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <TextField fx:id="txtNombre" prefWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <Label text="Edad:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <TextField fx:id="txtEdad" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="Estatura:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                        <TextField fx:id="txtEstatura" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="Telefono:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                        <TextField fx:id="txtTelefono" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <columnConstraints>
+                     <ColumnConstraints />
+                     <ColumnConstraints />
+                  </columnConstraints>
+                  <rowConstraints>
+                     <RowConstraints />
+                     <RowConstraints />
+                     <RowConstraints />
+                     <RowConstraints />
+                  </rowConstraints>
                     </GridPane>
-                    <Button text="Guardar Cambios" onAction="#actualizarPerfil"
-                            style="-fx-background-color:#2e7d32; -fx-text-fill:white;"/>
-                    <Label fx:id="lblStatus" text="" style="-fx-text-fill:#2e7d32;"/>
+                    <Button onAction="#actualizarPerfil" style="-fx-background-color:#2e7d32; -fx-text-fill:white;" text="Guardar Cambios" />
+                    <Label fx:id="lblStatus" style="-fx-text-fill:#2e7d32;" text="" />
                 </VBox>
             </Tab>
 
             <!-- Pestaña: Saldo -->
             <Tab text="Saldo">
                 <VBox spacing="12" style="-fx-padding:20;">
-                    <Label text="Recargar Saldo Virtual" style="-fx-font-weight:bold; -fx-font-size:15px;"/>
-                    <HBox spacing="8" alignment="CENTER_LEFT">
-                        <Label text="Cantidad ($):"/>
-                        <TextField fx:id="txtRecarga" prefWidth="150" promptText="ej: 100000"/>
-                        <Button text="Recargar" onAction="#recargarSaldo"
-                                style="-fx-background-color:#2e7d32; -fx-text-fill:white;"/>
+                    <Label style="-fx-font-weight:bold; -fx-font-size:15px;" text="Recargar Saldo Virtual" />
+                    <HBox alignment="CENTER_LEFT" spacing="8">
+                        <Label text="Cantidad ($):" />
+                        <TextField fx:id="txtRecarga" prefWidth="150" promptText="ej: 100000" />
+                        <Button onAction="#recargarSaldo" style="-fx-background-color:#2e7d32; -fx-text-fill:white;" text="Recargar" />
                     </HBox>
-                    <Label fx:id="lblMsgSaldo" text="" style="-fx-text-fill:#2e7d32;"/>
+                    <Label fx:id="lblMsgSaldo" style="-fx-text-fill:#2e7d32;" text="" />
                 </VBox>
             </Tab>
 

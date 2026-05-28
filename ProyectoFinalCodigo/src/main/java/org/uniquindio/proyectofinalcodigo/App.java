@@ -83,23 +83,23 @@ public class App extends Application {
                 true, 500, 0, true, LocalDate.now(), null);
 
         // Zonas
-        Zona zonaAventura = new Zona("Z1", "Zona Aventura", parque, "Norte", 150);
-        Zona zonaAcuatica = new Zona("Z2", "Zona Acuatica", parque, "Sur", 100);
-        Zona zonaFamiliar = new Zona("Z3", "Zona Familiar", parque, "Centro", 200);
+        Zona zonaAventura = new Zona("Z001", "Zona Aventura", parque, "Norte", 150);
+        Zona zonaAcuatica = new Zona("Z002", "Zona Acuatica", parque, "Sur", 100);
+        Zona zonaFamiliar = new Zona("Z003", "Zona Familiar", parque, "Centro", 200);
         parque.getListZonas().add(zonaAventura);
         parque.getListZonas().add(zonaAcuatica);
         parque.getListZonas().add(zonaFamiliar);
 
         // Atracciones - Zona Aventura
         ColaVirtual colaRusa = new ColaVirtual(null, 0);
-        Atraccion montanaRusa = new Atraccion("A1", "Montana Rusa", 12, 1.40, 12, 0,
+        Atraccion montanaRusa = new Atraccion("A001", "Montana Rusa", 12, 1.40, 12, 0,
                 5000, 0, 0, 0, TipoAtraccion.MECANICA_DE_ALTURA, null, EstadoAtraccion.ACTIVA, zonaAventura, colaRusa);
         colaRusa.setAtraccion(montanaRusa);
         zonaAventura.getListAtracciones().add(montanaRusa);
         parque.getListAtracciones().add(montanaRusa);
 
         ColaVirtual colaGiro = new ColaVirtual(null, 0);
-        Atraccion toroMecanico = new Atraccion("A2", "Toro Mecanico", 8, 1.20, 10, 0,
+        Atraccion toroMecanico = new Atraccion("A002", "Toro Mecanico", 8, 1.20, 10, 0,
                 3000, 0, 0, 0, TipoAtraccion.MECANICA_TERRESTRE, null, EstadoAtraccion.ACTIVA, zonaAventura, colaGiro);
         colaGiro.setAtraccion(toroMecanico);
         zonaAventura.getListAtracciones().add(toroMecanico);
@@ -107,7 +107,7 @@ public class App extends Application {
 
         // Atracciones - Zona Acuatica
         ColaVirtual colaRapidos = new ColaVirtual(null, 0);
-        Atraccion rapidos = new Atraccion("A3", "Rapidos del Rio", 10, 1.10, 8, 0,
+        Atraccion rapidos = new Atraccion("A003", "Rapidos del Rio", 10, 1.10, 8, 0,
                 2000, 0, 0, 0, TipoAtraccion.ACUATICA, null, EstadoAtraccion.ACTIVA, zonaAcuatica, colaRapidos);
         colaRapidos.setAtraccion(rapidos);
         zonaAcuatica.getListAtracciones().add(rapidos);
@@ -115,7 +115,7 @@ public class App extends Application {
 
         // Atracciones - Zona Familiar
         ColaVirtual colaShow = new ColaVirtual(null, 0);
-        Atraccion showMagico = new Atraccion("A4", "Show Magico", 50, 0.0, 0, 0,
+        Atraccion showMagico = new Atraccion("A004", "Show Magico", 50, 0.0, 0, 0,
                 0, 0, 0, 0, TipoAtraccion.SHOW, null, EstadoAtraccion.ACTIVA, zonaFamiliar, colaShow);
         colaShow.setAtraccion(showMagico);
         zonaFamiliar.getListAtracciones().add(showMagico);
@@ -149,13 +149,13 @@ public class App extends Application {
         // Visitantes
         Visitante v1 = new Visitante(500000, 25, false, parque, "V001", "Andres Garcia",
                 LocalDate.of(2000, 4, 12), 1.75, "3101112233", "Colombiana");
-        Entrada e1 = new Entrada("G1", LocalDate.now(), LocalDate.now().plusDays(5), true, TipoEntrada.GENERAL);
+        Entrada e1 = new Entrada("G001", LocalDate.now(), LocalDate.now().plusDays(5), true, TipoEntrada.GENERAL);
         v1.getListEntradas().add(e1);
         parque.getListPersonas().add(v1);
 
         Visitante v2 = new Visitante(300000, 17, false, parque, "V002", "Maria Ruiz",
                 LocalDate.of(2007, 9, 30), 1.58, "3204445566", "Colombiana");
-        Entrada e2 = new Entrada("FP1", LocalDate.now(), LocalDate.now().plusDays(5), true, TipoEntrada.FAST_PASS);
+        Entrada e2 = new Entrada("FP001", LocalDate.now(), LocalDate.now().plusDays(5), true, TipoEntrada.FAST_PASS);
         v2.getListEntradas().add(e2);
         parque.getListPersonas().add(v2);
 

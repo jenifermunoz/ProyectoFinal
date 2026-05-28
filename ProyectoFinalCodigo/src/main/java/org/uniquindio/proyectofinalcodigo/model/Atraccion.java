@@ -62,7 +62,6 @@ public class Atraccion implements IMostrable {
     public boolean procesarSolicitudCola(Visitante visitante, Atraccion atraccion){
         Operador operador = listOperadores.get(0);
         if(operador.validarAccesoCola(visitante, this)){
-            operador.permitirAccesoAtraccion(visitante, atraccion, null);
             return true;
         }
         return false;

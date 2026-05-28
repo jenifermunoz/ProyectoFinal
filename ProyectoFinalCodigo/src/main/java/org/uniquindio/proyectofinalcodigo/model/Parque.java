@@ -80,7 +80,7 @@ public class Parque {
         ArrayList<Entrada> listEntradas = new ArrayList<>();
         ArrayList<Visitante> listVisitantes = getListVisitantes(listPersonas);
         for(int i = 0; i<listVisitantes.size(); i++){
-	        for(int j = 0; i<listVisitantes.get(i).getListEntradas().size(); j++){
+	        for(int j = 0; j<listVisitantes.get(i).getListEntradas().size(); j++){
 		        listEntradas.add(listVisitantes.get(i).getListEntradas().get(j));
             }
         }
@@ -120,6 +120,17 @@ public class Parque {
         return -1;
     }
 
+    //Buscar Atraccion con ID
+
+    public int buscarAtraccionById(String id){
+        for(int i=0; i<getListAtracciones().size(); i++){
+			if(getListAtracciones().get(i).getId().equalsIgnoreCase(id)){
+			    return i;
+            }
+    	}
+        return -1;
+    }
+
     //Buscar Atraccion con nombre
 
     public int buscarAtraccionByNombre(String nombre){
@@ -133,11 +144,22 @@ public class Parque {
         return -1;
     }
 
+    //Buscar Zona con ID
+
+    public int buscarZonaById(String id){
+	    for(int i=0;i<listZonas.size();i++){
+	    	if(listZonas.get(i).getId().equals(id)){
+		    	return i;
+		    }
+	    }
+        return -1;
+    }
+
     //Buscar Zona con nombre
 
     public int buscarZonaByNombre(String nombre){
 	    for(int i=0;i<listZonas.size();i++){
-	    	if(listZonas.get(i).getNombre() == nombre){
+	    	if(listZonas.get(i).getNombre().equals(nombre)){
 		    	return i;
 		    }
 	    }

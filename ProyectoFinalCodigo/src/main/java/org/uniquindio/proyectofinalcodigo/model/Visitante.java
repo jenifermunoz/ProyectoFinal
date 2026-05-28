@@ -71,7 +71,8 @@ public class Visitante extends Persona {
         if(this.getListEntradas().isEmpty()){
             index = 0;
         }
-	    if((this.getListEntradas().isEmpty() || this.getListEntradas().get(index).isActiva() != true) && parque.getCapacidadMax() > parque.getListVisitantes(parque.getListPersonas()).size()){
+	    boolean sinEntradaActiva = this.getListEntradas().isEmpty() || !this.getListEntradas().get(this.getListEntradas().size()-1).isActiva();
+        if(sinEntradaActiva && parque.getCapacidadMax() > parque.getListVisitantes(parque.getListPersonas()).size()){
 		    Entrada nuevaentrada = new Entrada(null, LocalDate.now(), LocalDate.now().plusDays(5), false, null);
 		    switch(tipo){
 		    	case 1:
@@ -82,7 +83,7 @@ public class Visitante extends Persona {
 					    		num++;
 					    	}
 					    }
-				    	nuevaentrada.setId("G"+Integer.toString(num+1));
+				    	nuevaentrada.setId("G"+String.format("%03d", num+1));
 			    		nuevaentrada.setTipoEntrada(TipoEntrada.GENERAL);
 				    	nuevaentrada.setActiva(true);
 				    	this.getListEntradas().add(nuevaentrada);
@@ -98,7 +99,7 @@ public class Visitante extends Persona {
 			    				num++;
 			    			}
 			    		}
-			    		nuevaentrada.setId("F"+Integer.toString(num+1));
+			    		nuevaentrada.setId("F"+String.format("%03d", num+1));
 			    		nuevaentrada.setTipoEntrada(TipoEntrada.FAMILIAR);
 			    		nuevaentrada.setActiva(true);
 			    		this.getListEntradas().add(nuevaentrada);
@@ -114,7 +115,7 @@ public class Visitante extends Persona {
 			    				num++;
 			    			}
 			    		}
-			    		nuevaentrada.setId("FP"+Integer.toString(num+1));
+			    		nuevaentrada.setId("FP"+String.format("%03d", num+1));
 			    		nuevaentrada.setTipoEntrada(TipoEntrada.FAST_PASS);
 			    		nuevaentrada.setActiva(true);
 			    		this.getListEntradas().add(nuevaentrada);
@@ -128,6 +129,20 @@ public class Visitante extends Persona {
 		    }
 	    }
 	    return false;
+    }
+
+    // Ver lista tiquetes
+
+    public String mostrarListEntradas(){
+        String lista = "";
+        if(this.getListEntradas().isEmpty()==false){
+            for(int i=0; i<this.getListEntradas().size(); i++){
+                lista += this.getListEntradas().get(i).toString() + "\n";
+            }
+        }else{
+        lista = "No posees ningun ticket. Compra uno!";
+        }
+        return lista;
     }
 
     //Consultar el mapa del parque
@@ -154,8 +169,16 @@ public class Visitante extends Persona {
 	    int i = parque.buscarZonaByNombreAtraccion(nombre);
 	    int j = parque.buscarAtraccionByNombre(nombre);
 	    if(i!=-1 && j!=-1){
-	    	this.getAtraccionesFavoritas().add(parque.getListZonas().get(i).getListAtracciones().get(j));
-	    	return true;
+            boolean repetido = false;
+            for(int k = 0; k<this.getAtraccionesFavoritas().size(); k++){
+                if(this.getAtraccionesFavoritas().get(k) == parque.getListZonas().get(i).getListAtracciones().get(j)){
+                    repetido = true;
+                }
+            }
+            if(repetido == false){
+                this.getAtraccionesFavoritas().add(parque.getListZonas().get(i).getListAtracciones().get(j));
+	    	    return true;
+            }
 	    }
 	    return false;
     }
@@ -164,9 +187,13 @@ public class Visitante extends Persona {
 
     public String mostrarAtraccionesFavoritas(Parque parque){
 	    String favoritas = "";
-	    for(int i=0; i<this.getAtraccionesFavoritas().size(); i++){
-	    	favoritas += (this.getAtraccionesFavoritas().get(i).toString() + "\n");
-	    }
+        if(this.getAtraccionesFavoritas().isEmpty()==false){
+	        for(int i=0; i<this.getAtraccionesFavoritas().size(); i++){
+	    	    favoritas += (this.getAtraccionesFavoritas().get(i).mostrarDatos() + "\n");
+	        }
+        }else{
+        favoritas = "No tienes ninguna atraccion marcada como favorita. Marca una!";
+        }
 	    return favoritas;
     }
 
@@ -183,7 +210,16 @@ public class Visitante extends Persona {
     // Unirse a la cola virtual de una Atraccion
 
     public boolean unirseAColaVirtualAtraccion(Parque parque, Atraccion atraccion){
-		return atraccion.procesarSolicitudCola(this, atraccion);
+        if(this.getListEntradas().isEmpty() != true){
+            if(this.getListEntradas().get(this.getListEntradas().size()-1).isActiva()==true){
+                if(this.pagarConSaldoVirtual(atraccion.getCostoAdicional())){
+                    return atraccion.procesarSolicitudCola(this, atraccion);
+                }
+                return false;
+            }
+            return false;
+        }
+        return false;
     }
 
     // Recargar Saldo Virtual 
@@ -195,8 +231,10 @@ public class Visitante extends Persona {
     // Pagar usando Saldo Virtual
 
     public boolean pagarConSaldoVirtual(double cantidad){
+        System.out.println(this.getSaldoVirtual()>=cantidad);
 	    if(this.getSaldoVirtual()>=cantidad){
 		    this.setSaldoVirtual(this.getSaldoVirtual()-cantidad);
+            System.out.println(this.getSaldoVirtual());
 		    return true;
 	    }
 	    return false;

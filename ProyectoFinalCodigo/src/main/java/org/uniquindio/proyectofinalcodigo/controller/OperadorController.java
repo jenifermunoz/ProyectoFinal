@@ -1,6 +1,8 @@
 package org.uniquindio.proyectofinalcodigo.controller;
 
 import org.uniquindio.proyectofinalcodigo.model.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class OperadorController {
@@ -13,12 +15,14 @@ public class OperadorController {
         this.operadorActivo = operadorActivo;
     }
 
+    // Pestaña de Gestion
+
     public boolean validarAcceso(Visitante visitante, Atraccion atraccion) {
         return operadorActivo.validarAccesoCola(visitante, atraccion);
     }
 
-    public boolean permitirAcceso(Visitante visitante, Atraccion atraccion) {
-        return operadorActivo.permitirAccesoAtraccion(visitante, atraccion, "");
+    public boolean permitirAcceso(Atraccion atraccion) {
+        return operadorActivo.permitirAccesoAtraccion(atraccion, "");
     }
 
     public boolean retirarVisitantes(Atraccion atraccion) {
@@ -28,6 +32,20 @@ public class OperadorController {
     public void cambiarCapacidad(int capacidad, Atraccion atraccion) {
         operadorActivo.cambiarCapacidadAtraccion(capacidad, atraccion);
     }
+
+    public ArrayList<Visitante> mostrarColaVirtualGF(Atraccion atraccion){
+        return operadorActivo.mostrarColaVirtualGF(atraccion);
+    }
+
+    public ArrayList<Visitante> mostrarColaVirtualFF(Atraccion atraccion){
+        return operadorActivo.mostrarColaVirtualFF(atraccion);
+    }
+
+    public ArrayList<Visitante> mostrarVisitantesAtraccion(Atraccion atraccion){
+        return operadorActivo.mostrarVisitantesAtraccion(atraccion);
+    }
+
+    // Pestaña de Estado
 
     public boolean registrarEstado(Atraccion atraccion, int estado, String descripcion) {
         return operadorActivo.registrarEstadoAtraccion(atraccion, estado, descripcion);
@@ -41,7 +59,12 @@ public class OperadorController {
         return operadorActivo.finalizarRevisionTecnica(atraccion, descripcion);
     }
 
+    public String mostrarRevisionesTecnicas(){
+        return operadorActivo.mostrarRevisionesTecnicas(theParque);
+    }
+
     // Devuelve solo las atracciones de la zona del operador
+
     public List<Atraccion> getAtraccionesDeZona() {
         if (operadorActivo.getTheZona() != null) {
             return operadorActivo.getTheZona().getListAtracciones();

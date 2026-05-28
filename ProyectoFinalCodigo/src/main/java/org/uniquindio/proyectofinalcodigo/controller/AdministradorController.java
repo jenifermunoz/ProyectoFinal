@@ -41,22 +41,22 @@ public class AdministradorController {
     public boolean registrarZona(String nombre, String ubicacion, int visitantesMax) {
         return adminActivo.registrarZona(theParque, nombre, ubicacion, visitantesMax);
     }
-    public boolean modificarZona(String nombre, int visitantesMax) {
-        return adminActivo.modificarZona(theParque, nombre, visitantesMax);
+    public boolean modificarZona(String id, String nombre, int visitantesMax) {
+        return adminActivo.modificarZona(theParque, id, nombre, visitantesMax);
     }
-    public boolean eliminarZona(String nombre) {
-        return adminActivo.eliminarZona(theParque, nombre);
+    public boolean eliminarZona(String id) {
+        return adminActivo.eliminarZona(theParque, id);
     }
 
     // Atracciones
     public boolean registrarAtraccion(Zona zona, String nombre, int cap, double altMin, int edadMin, double costo, TipoAtraccion tipo) {
         return adminActivo.registrarAtraccion(theParque, zona, nombre, cap, altMin, edadMin, costo, tipo, null, EstadoAtraccion.ACTIVA);
     }
-    public boolean modificarAtraccion(Zona zona, String nombre, int cap, double altMin, int edadMin, double costo) {
-        return adminActivo.modificarAtraccion(theParque, zona, nombre, cap, altMin, edadMin, costo);
+    public boolean modificarAtraccion(String id, String nombre, int cap, double altMin, int edadMin, double costo) {
+        return adminActivo.modificarAtraccion(theParque, id, nombre, cap, altMin, edadMin, costo);
     }
-    public boolean eliminarAtraccion(String nombre) {
-        return adminActivo.eliminarAtraccion(theParque, nombre);
+    public boolean eliminarAtraccion(String id) {
+        return adminActivo.eliminarAtraccion(theParque, id);
     }
 
     // Clima
@@ -71,9 +71,11 @@ public class AdministradorController {
     public void terminarJornada() {
         adminActivo.terminarJornada(theParque);
     }
+
     public String consultarReporte() {
         return adminActivo.consultarReporteGeneral(theParque);
     }
+    
     public String consultarDatos(int tipo, String dato) {
         return adminActivo.consultarDatos(theParque, tipo, dato);
     }
